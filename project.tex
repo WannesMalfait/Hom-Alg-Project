@@ -1,0 +1,387 @@
+\documentclass{article}
+
+\input{definitions/preamble}
+\input{definitions/macros}
+\input{definitions/letterfonts}
+
+\usepackage[width=400pt]{geometry}
+
+\DeclareMathOperator{\Open}{\mathbf{Open}}
+\DeclareMathOperator{\opp}{opp}
+\DeclareMathOperator{\Cont}{Cont}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\colim}{colim}
+
+\title{A Solid Exploration of Condensed Mathematics}
+\author{Wannes Malfait}
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+
+\section{Introduction}
+Most of the contents of this paper will be based on the lecture
+notes by Peter Scholze, who developed the theory of condensed mathematics
+together with Dustin Clausen (\cite{Sch2019LecturesCM}).
+
+\section{Sheaves}
+A central role in this paper will be played by sheaves.
+It therefore makes sense to study these objects more closely,
+and attempt to gain some intuition before jumping straight into
+the heart of the matter.
+The first step, will be to convince our selves, that sheaves
+are interesting enough to study, and that they form a nice type
+of category. As such, we will dive into sheaf cohomology and some
+applications of it in algebraic topology. But first, we must
+define what a sheaf is.
+
+\subsection{On Topological Spaces}
+Consider the following situation in algebraic geometry.
+We have some (affine) algebraic variety $X$, with the Zariski Topology.
+Associated to $X$ is an ideal $I$ of all the polynomials that vanish
+on $X$. Then, the quotient ring $\mcO_X(X) = k[x_1,\ldots,x_n]/I$, is
+the coordinate ring of $X$. The elements of $\mcO_X(X)$ are the regular
+functions on $X$. For an open $U\subseteq X$ we can also consider the
+regular functions on $U$, which we will denote as $\mcO_X(U)$.
+This mapping between open subsets of $X$ and rings,
+given by $\mcO_X$, is precisely a sheaf.
+In this case, $\mcO_X$ is known as the \emph{structure sheaf}.
+In general, a sheaf will give some global data that can be defined
+locally.
+\begin{definition}[Presheaves]
+    Let $X$ be a topological space.
+    A \emph{presheaf of sets} $\mcF$ on $X$ consists of two things:
+    \begin{enumerate}
+        \item For each open $U\subseteq X$ a set $\mcF(U)$.
+              These are known as the \emph{sections} of $\mcF$ over $U$.
+        \item For each inclusion $U\subseteq V$ a map
+              $\rho_{U,V}\colon \mcF(V) \to \mcF(U)$, such that $\rho_{U,U} = id_{\mcF(U)}$, and
+              for $U\subseteq V \subseteq W$ we have $\rho_{U,V}\circ \rho_{V,W} = \rho_{U, W}$.
+              We call the $\rho_{U,V}$ the \emph{restrictions}, and if $s\in \mcF(U)$,
+              we will often denote $\rho_{V,U}(s) = s|_V$.
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    If we write $\Open(X)$ for the category of open sets of $X$,
+    with morphisms given by the inclusion maps, then a presheaf is
+    precisely a functor $\mcF\colon \Open(X)^{\opp} \to \Set$.
+\end{remark}
+
+This only defines what a ``presheaf'' is.
+The sheaf condition will ensure that the value of $\mcF(U)$ can be
+constructed by defining it locally on elements of a cover $\{U_i\}_{i\in I}$ of $U$.
+It is exactly this interaction between local definitions and global objects
+that makes sheaves so useful.
+\begin{definition}[Sheaves]
+    Let $X$ be a topological space, and $\mcF$ a presheaf of sets on $X$.
+    We say that $\mcF$ is a sheaf, if it satisfies the following additional properties
+    for any open $U\subseteq X$ and open cover $\{U_i\}_{i\in I}$ of $U$:
+    \begin{itemize}
+        \item (uniqueness/locality) If $s,t\in \mcF(U)$ are sections such that
+              $s|_{U_i} = t|_{U_i}$ for all $i\in I$, then $s=t$.
+        \item (gluing) If $\{s_i \in \mcF(U_i)\}_{i\in I}$ is
+              a collection of sections such that
+              \begin{equation*}
+                  s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j} \text { for all } i, j,
+              \end{equation*}
+              then there is a section $s\in \mcF(U)$ such that $s_i = s|_{U_i}$ for all $i \in I$.
+    \end{itemize}
+    In other words, if we have a bunch of sections
+    that agree on overlaps, then we can uniquely glue them together.
+\end{definition}
+\begin{remark}
+    \label{rem:cat_def_sheaf}
+    We can reformulate the properties in a more categorical manner.
+    Namely, for any open cover $\{U_i\}_{i\in I}$ of $U\subseteq X$,
+    the following diagram:
+    \begin{equation*}
+        \begin{tikzcd}[cramped]
+            \mcF(U) \rar
+            &\prod\limits_{i\in I} \mcF(U_i) \rar[shift left] \rar[shift right]
+            & \prod\limits_{i,j \in I} \mcF(U_i\cap U_j),
+        \end{tikzcd}
+    \end{equation*}
+    has to be an equalizer. This diagram makes sense in any target category
+    that has all limits. In terms of sets,
+    the first map is given by $s \mapsto (s|_{U_i})_{i\in I}$. The pair of
+    maps is given by the two possible restrictions, $(s_i)_{i\in I} \mapsto ((s_i|_{U_i \cap U_j})_{j\in I})_{i\in I}$
+    and $(s_j)_{j\in I} \mapsto ((s_j|_{U_i \cap U_j})_{i\in I})_{j\in J}$.
+
+    In this way, we can define sheaves on rings or abelian groups, or other
+    categories with all (set-indexed) limits.
+    For example, a presheaf of abelian groups on $X$, is a functor
+    $\mcF \colon \Open(X)^{\opp} \to \Ab$.
+\end{remark}
+
+In many cases, defining some structure on sheaves, will come down
+to defining it on $\mcF(U)$ in a compatible way.
+As an example, we can look at morphisms of sheaves.
+\begin{definition}[Morphisms of sheaves]
+    Let $\mcF, \mcG$ be presheaves on a topological space $X$.
+    A  \emph{morphism of presheaves} $\varphi \colon \mcF \to \mcG$ assigns to
+    each open $U\subset X$ a morphism $\varphi_U \colon \mcF(U) \to \mcG(U)$
+    compatible with the restriction maps, i.e. for $U\subseteq V \subseteq X$
+    the following diagram commutes:
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcF(V) \rar["\varphi_V"] \dar["\rho^\mcF_{U,V}"]
+            & \mcG(V) \dar["\rho^\mcG_{U,V}"] \\
+            \mcF(U) \rar["\varphi_U"]
+            & \mcG(U)
+        \end{tikzcd}.
+    \end{equation*}
+    In other words, $\varphi$ is a natural transformation between $\mcF$ and $\mcG$.
+    Using a bit of abusive notation, the compatibility can be read as
+    $\varphi(s|_U) = \varphi(s)|_U$.
+    A \emph{morphism of sheaves} is a morphism of the underlying presheaves.
+\end{definition}
+
+For a topological space $X$, we now have (pre)sheaves and morphisms between them.
+These form a category. We will write $\PSh(X)$ for the category of presheaves of
+sets on $X$, and $\Sh(X)$ for the category of sheaves of sets on $X$.
+In the same way, we write $\Ab(X), \Ring(X), \Vect(X),\dots $ for the category of
+sheaves of abelian groups, rings, vector spaces, \dots on $X$.
+
+\subsubsection{Examples}
+To solidify our understanding of sheaves, it will be beneficial to look
+at some examples.
+\begin{example}
+    The simplest examples of sheaves are those were
+    $\mcF(U)$ is not just a set, but a set of functions, and the
+    restrictions correspond to actual restrictions.
+
+\end{example}
+\begin{example}
+    Let $Y$ be another topological space, then we can define $\mcF(U) \defeq \Cont(U, Y)$
+    where $\Cont(U,Y) = \{f\colon U \to Y \mid f \text{ continuous }\}$.
+    The restrictions are defined as actual restrictions, and we get a presheaf. To see that
+    it is a sheaf, we need to verify the gluing condition.
+    Let $\{U_i\}$ be an open covering of $U\subseteq X$,
+    and $f_i \colon U_i \to Y$ is a continuous map for each $i\in I$,
+    such that $f_i|_{U_i \cap U_j} = f_j |_{U_i \cap U_j}$ for all $i,j\in I$.
+    We can now define a map $f\colon U \to Y$ via $f(u) = f_i(u)$ for any $i\in I$
+    such that $u\in U_i$. By assumption, this map is well-defined.
+    To see that it is continuous, for any $V\subseteq Y$ open,
+    we can write
+    \begin{equation*}
+        f\inv(V) = U \cap f\inv(V)=
+        \bigcup_{i\in I} (U_i \cap f\inv(V)) =
+        \bigcup_{i\in I}f_i\inv(V),
+    \end{equation*}
+    which is open since all the $f_i$ are continuous.
+
+    So we see that $\mcF$ is a sheaf.
+    In the case that $Y$ has the discrete topology,
+    we call $\mcF$ the \emph{constant sheaf with value Y}.
+    The sections of $\mcF$ over $U$ are the \emph{locally} constant functions,
+    i.e. at each point $x\in U$ we can find an open neighborhood $V$ of $x$,
+    such that $f$ is constant on $V$.
+\end{example}
+\begin{example}
+
+    Let $f\colon X\to Y$ be a continuous map, then we get a sheaf
+    on $X$ by the rule
+    \begin{equation*}
+        \Gamma(Y/X)(U) = \{s\colon U\to Y \mid f\circ s = 1_{U}\}.
+    \end{equation*}
+    The gluing construction is the same as in the previous example.
+    To see that this yields another section, note that for
+    any $u \in U$, $s(u) = s_i(u)$ for some $i\in I$, and hence
+    $f(s(u)) = f(s_i(u)) = u$.
+    We call $\Gamma(Y/X)$ the \emph{sheaf of sections of $f$}.
+\end{example}
+\begin{example}
+    As we remarked above, the structure sheaf $\mcO_X$ is also a sheaf,
+    where again, the restrictions are actual restrictions of functions.
+    To show that the gluing of regular functions is again regular,
+    requires some machinery from algebraic geometry, which falls outside
+    the scope of this paper.
+\end{example}
+
+Although other examples exist, we will first look
+at a way of generating a sheaf from a presheaf.
+
+\subsubsection{Sheafification}
+In a lot of constructions, the natural thing we do, will end up
+being a presheaf, but not a sheaf in general. So, we will need some way to turn
+presheaves into sheaves. For this subsection we largely follow
+\cite{stacks-project}.
+\begin{prop}
+    The fully faithful inclusion
+    \begin{equation*}
+        \iota \colon \Sh(X) \injto \PSh(X),
+    \end{equation*}
+    admits a left adjoint $\mcF \to \mcF^\sharp$, ``sheafification''.
+\end{prop}
+
+We will give an explicit construction of $\mcF^\sharp$.
+As it turns out, ``sheafification'' is actually a two-step process.
+The first step is making the presheaf separated, and then turning
+the separated presheaf into a sheaf.
+\begin{definition}
+    We say that a presheaf $\mcF$ is \emph{separated} if $\mcF(U) \injto \prod\limits_i \mcF(U_i)$
+    for any cover $U = \bigcup_i U_i$.
+\end{definition}
+We first have a few lemmas regarding limits of presheaves and sheaves.
+\begin{lemma}
+    Let $X$ be a topological space, then limits and
+    colimits exist in $\PSh(X)$. Additionally, for any $U\subseteq X$,
+    the functor $\PSh(X) \to \Set \colon \mcF \mapsto \mcF(U)$
+    commutes with all limits and colimits.
+\end{lemma}
+\begin{proof}
+    Let $\mcF \colon \mcZ \to \PSh(X)$ be a functor. We get a cone $(\mcF_{\lim}, p^z)$ by
+    moving to the images in $\Set$. In other words we take
+    $\mcF_{\lim} (U) = \lim_{z \in \mcZ} \mcF_z(U)$,
+    and $p^z_U \colon \lim_{z\in \mcZ}\mcF_z(U) \to \mcF_z(U)$.
+    For the restrictions, if $U\subseteq V$ we get a unique map
+    $\mcF_{\lim}(V) \to \mcF_{\lim}(U)$, given by the fact
+    that $\mcF_{\lim}(U)$ is a limit, and $\mcF_{\lim}(V)$ is a cone
+    on all the $\mcF_z(U)$ by composing the maps $\mcF_{\lim}(V) \to \mcF_z(V)$ with
+    the restrictions $\mcF_z(V) \to \mcF_z(U)$. So we see that $\mcF_{\lim}$
+    is indeed a presheaf.
+    \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+            &&\mcF_{\lim}(V) \dar[dashed] \ar[ddll, bend right, "p^z_V"'] \ar[ddrr, bend left, "p^{z'}_V"]\\
+            &&\mcF_{\lim}(U) \ar[dl, "p^z_U"'] \ar[dr, "p^{z'}_U"]\\
+            \mcF_z(V) \rar &\mcF_z(U) \ar[rr] &&\mcF_{z'}(U) &\mcF_{z'}(V) \lar
+        \end{tikzcd}
+    \end{equation*}
+    To see that the maps $p^z$ are morphisms of presheaves, we need
+    to verify that the following diagram commutes:
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcF_{\lim}(V) \dar \rar["p^z_V"] & \mcF_z(V) \dar \\
+            \mcF_{\lim}(U) \rar["p^z_U"] & \mcF_z(U)
+        \end{tikzcd},
+    \end{equation*}
+    but that already follows from the previous diagram.
+
+    Let us now verify that $\mcF_{\lim}$ is actually a limit.
+    If $(\mcG, g^z)$ is another cone, then for each $U\subseteq X$,
+    we get a unique map $\mcG(U) \to \mcF_{\lim}(U)$, such that the
+    corresponding cone diagrams commute. It suffices to show that these
+    maps combine to form a map of presheaves.
+    Using the universal property of limits, this comes down to showing
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcG(V)\rar \dar & \mcF_{\lim}(V) \dar \\
+            \mcG(U)\rar & \mcF_{\lim}(U)
+        \end{tikzcd}
+        \iff
+        \begin{tikzcd}
+            \mcG(V)\rar["g^z_V"] \dar & \mcF_{z}(V) \dar \\
+            \mcG(U)\rar["g^z_U"] & \mcF_{z}(U)
+        \end{tikzcd}
+        \forall z\in \mcZ.
+    \end{equation*}
+    The commutativity of these last diagrams, is just saying that the
+    maps $g^z$ are presheaf morphisms, which is true by $(\mcG, g^z)$ being a cone.
+\end{proof}
+The big difference between sheaves and presheaves, is that we can glue
+things together defined on an open cover. The trick will be to force
+the presheaf to behave as we want. Let us try and make this more precise.
+
+Let $U \subset X$ be an open set of a topological space $X$.
+We obtain a category $\Cov(U)$ with objects the open coverings of $U$,
+and morphisms given by refinements.
+If $\mcU = \{U_i\}_{i\in I}$ and $\mcV= \{V_j\}_{j\in J}$ are open covers of $U$, we say that $\mcU$
+is a \emph{refinement} of $\mcV$ if there is a map $\alpha \colon I \to J$
+such that $U_i \subseteq V_{\alpha(j)}$ for all $i\in I$.
+% \begin{remark}
+%     Note that $\Cov(-)$ is a contravariant functor. Loosely speaking,
+%     if $U\subseteq V \subseteq W$, there are maps (functors actually) $\Cov(V) \to \Cov(U)$
+%     and $\Cov(W) \to \Cov(V)$ given by mapping $\{V_i\}$ to $\{V_i \cap U\}$,
+%     and $\{W_i\} \to \{W_i \cap V\}$ which respect composition.
+% \end{remark}
+This allows the following reformulation:
+\begin{lemma}
+    Let $\mcF$ be a presheaf on a topological space $X$.
+    For an open cover $\mcU$ of $U\subseteq X$, define
+    $\mcF(\mcU)$ as the following equalizer:
+    \begin{equation*}
+        \tilde{\mcF}(\mcU) =
+        \{(s_i)_{i\in I} \in \prod\limits_{i\in I}\mcF(U_i)\mid
+        s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}\}.
+    \end{equation*}
+    This defines a functor $\tilde{\mcF} \colon \Cov(U)^{\opp} \to \Set$, and there
+    is a canonical map $\mcF(U) \to \tilde{\mcF}(\mcU)$.
+    The presheaf $\mcF$ is a sheaf if and only if this map is bijective
+    for every cover $\mcU$.
+\end{lemma}
+\begin{proof}
+    Given a refinement $\mcU$ of $\mcV$, we have the map
+    $\tilde{\mcF}(\mcV) \to \tilde{\mcF}(\mcU)$ given by
+    \begin{equation*}
+        (s_j)_{j\in J} \mapsto ((s_{\alpha(i)})|_{U_i})_{i\in I}.
+    \end{equation*}
+    This is well-defined, since
+    \begin{align*}
+        (s_{\alpha(i)}|_{U_i})|_{U_i \cap U_j}
+         & = s_{\alpha(i)}|_{U_i \cap U_j}
+         &                                                      & (U_i \cap U_j \subseteq U_i)                              \\
+         & = (s_{\alpha(i)}|_{V_{\alpha(i)}\cap V_{\alpha(j)}})
+        |_{U_i \cap U_j}
+         &                                                      & (U_i \cap U_j \subseteq V_{\alpha(i)} \cap V_{\alpha(j)}) \\
+         & = (s_{\alpha(j)}|_{V_{\alpha(i)}\cap V_{\alpha(j)}})
+        |_{U_i \cap U_j}
+         &                                                      & (\text{definition of } \tilde{\mcF}(\mcV))                \\
+         & = (s_{\alpha(j)})|_{U_i \cap U_j}
+         &                                                      & (U_i \cap U_j \subseteq V_{\alpha(i)} \cap V_{\alpha(j)}) \\
+         & = (s_{\alpha(j)}|_{U_j})|_{U_i \cap U_j},
+    \end{align*}
+    where we used repeatedly that $(s|_{T})|_{S} = s|_{S}$ if $S\subseteq T$.
+    Functoriality of $\tilde{\mcF}$ is now easily verified.
+    Indeed, if $\mcU$ is a refinement of $\mcV$ which is a refinement
+    of $\mcW$, we have maps $\alpha\colon I \to J$ and $\beta \colon J \to K$
+    such that $U_i \subseteq V_{\alpha(i)}$ and $V_j \subseteq W_{\beta(j)}$
+    for $i\in I, j\in J$. Hence, $U_i \subseteq V_{\alpha(i)} \subseteq W_{\beta(\alpha(i))}$,
+    so that
+    \begin{equation*}
+        ((s_{\beta(\alpha(i))})|_{V_{\alpha(i)}}|_{U_i})_{i\in I}
+        = ((s_{\beta(\alpha(i))})|_{U_i})_{i\in I} ,
+    \end{equation*}
+    which is what we needed to show.
+
+    Since $\{U\}$ is itself a cover of $U$, and $\mcF(U) = \tilde{\mcF}(\{U\})$,
+    we now get a canonical map $\mcF(U) \to \tilde{\mcF}(\mcU)$ for any open cover
+    $\mcU$ of $U$. The final claim follows from \cref{rem:cat_def_sheaf}.
+\end{proof}
+We now have the following construction:
+\begin{lemma}
+    Given a presheaf of $\mcF$ on a space $X$, we can construct
+    a new presheaf $\mcF^+$ by setting
+    \begin{equation*}
+        \mcF^+(U) = \colim_{\mcU \in \Cov(U)} \tilde{\mcF}(\mcU),
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    We omit the details here, since the arguments are very similar
+    to the previous two lemmas.
+
+    Let us just show how $\mcF^+$ acts on morphisms. Consider
+    $U \subseteq V$. Then this gives a map $\Cov(V) \to \Cov(U)$
+    by mapping a cover $\{V_i\}_{i\in I}$ of $V$ to the cover $\{V_i \cap U\}_{i\in I}$
+    of $U$. We get induced maps $\tilde{\mcF}(\mcU) \to \tilde{\mcF}(\mcV)$,
+    and we obtain maps $\tilde{\mcF}(\mcU) \to \mcF^+(V)$.
+    By the universal property of the colimit, this gives a unique map
+    $\mcF^+(V) \to \mcF^+(U)$, making the cone diagrams commute.
+\end{proof}
+
+Prove theorem 7.10.10 from stacks project...
+
+\subsection{On a Site}
+
+\subsubsection{Sites}
+\section{Sheaf Cohomology}
+Links to Algebraic Topology
+
+Follow \cite{Tu2022IntroductionSC}?
+Maybe look at other things as well?
+\section{Condensed Sets}
+\bibliographystyle{alpha}
+\bibliography{references.bib}
+\end{document}

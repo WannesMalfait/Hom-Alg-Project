@@ -1,0 +1,91 @@
+%% PACKAGES
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+
+%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{corollary*}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{exercise*}{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{remark*}{Remark}
+
+%===========================================================%
+%The code below customises theorem numbering
+%===========================================================%
+
+\theoremstyle{plain}
+\newtheorem{innercustomgenericplain}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheoremplain}[2]{%
+    \crefname{#2}{#2}{#2s}%
+    \newenvironment{#1}[1]
+    {%
+        \renewcommand\customgenericname{#2}%
+        \crefalias{innercustomgenericplain}{#2}%
+        \renewcommand\theinnercustomgenericplain{##1}%
+        \innercustomgenericplain
+    }
+    {\endinnercustomgenericplain}
+}
+
+\theoremstyle{definition}
+\newtheorem{innercustomgenericdefinition}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheoremdefinition}[2]{%
+    \crefname{#2}{#2}{#2s}%
+    \newenvironment{#1}[1]
+    {%
+        \renewcommand\customgenericname{#2}%
+        \crefalias{innercustomgenericdefinition}{#2}%
+        \renewcommand\theinnercustomgenericdefinition{##1}%
+        \innercustomgenericdefinition
+    }
+    {\endinnercustomgenericdefinition}
+}
+
+\theoremstyle{remark}
+\newtheorem{innercustomgenericremark}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheoremremark}[2]{%
+    \crefname{#2}{#2}{#2s}%
+    \newenvironment{#1}[1]
+    {%
+        \renewcommand\customgenericname{#2}%
+        \crefalias{innercustomgenericremark}{#2}%
+        \renewcommand\theinnercustomgenericremark{##1}%
+        \innercustomgenericremark
+    }
+    {\endinnercustomgenericremark}
+}
+
+
+\newcustomtheoremplain{customtheorem}{Theorem}
+\newcustomtheoremplain{customlemma}{Lemma}
+\newcustomtheoremplain{customprop}{Proposition}
+\newcustomtheoremplain{customcorollary}{Corollary}
+
+\newcustomtheoremdefinition{customdefinition}{Definition}
+\newcustomtheoremdefinition{customexample}{Example}
+\newcustomtheoremdefinition{customexercise}{Exercise}
+
+\newcustomtheoremremark{customremark}{Remark}
