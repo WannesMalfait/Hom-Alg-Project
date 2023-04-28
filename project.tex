@@ -201,14 +201,73 @@ at some examples.
     the scope of this paper.
 \end{example}
 
-Although other examples exist, we will first look
-at a way of generating a sheaf from a presheaf.
+As it turns out, it is possible to generalize
+the definition of sheaves to categories which
+also have the notion of a covering. We will
+need this notion when discussing condensed sets.
+\subsection{On a Site}
+
+The idea of a site was first introduced by
+Alexander Grothendieck, and has proven to be
+very useful in algebraic geometry.
+For this subsection we largely follow
+\cite[Part 1, Chapter 7]{stacks-project}.
+
+\subsubsection{Coverings and Sites}
+
+To define a site, we collect all the essential
+properties that coverings of topological spaces have:
+\begin{definition}[Coverings and Sites]
+    A \emph{site} is a category $\mcC$ together
+    with a set $\Cov(\mcC)$ of \emph{coverings} of
+    $\mcC$, where the following axioms hold:
+    \footnote{We force $\Cov(\mcC)$ to be a set since we will take limits
+        over all coverings. It is possible to let $\Cov(\mcC)$ be a class,
+        and then show that it can be replaced with a set of coverings
+        that gives rise to the same category of sheaves.
+        See \cite[Remark 7.6.3]{stacks-project}.}
+    \begin{enumerate}
+        \item If $V \to U$ is an isomorphism, then $\{V \to U\}\in \Cov(\mcC)$.
+        \item If $\{U_i \to U\}_{i\in I}$ is a covering, and for each $i\in I$,
+              $\{V_{ij} \to U_i\}_{j \in J_i}$ is a covering as well, then so is the
+              composition $\{V_{ij} \to U\}_{i\in I, j\in J_i}$.
+        \item If $\{U_i \to U\}_{i\in I}$ is a covering and $V \to U$ is a morphism
+              of $\mcC$, then the pullback $U_i\times_U V$ exists for all $i$
+              and $\{U_i\times_U V \to V\}_{i\in I}$ is a covering.
+    \end{enumerate}
+\end{definition}
+
+To make sense of this definition, let us look at the
+canonical example.
+\begin{example}
+    Let $X$ be a topological space, then $\Open(X)$ is a
+    site with coverings given by the open covers.
+    Let us verify that the axioms hold:
+    \begin{enumerate}
+        \item The only isomorphisms in $\Open(X)$ are the identity maps.
+              Since $\{U\}$ is an open cover of $U$ for any $U \in \Open(X)$,
+              the first axiom is satisfied.
+        \item If $U = \bigcup_{i\in I} U_i$ is an open cover of $U$,
+              and for each $i \in I$, $U_i = \bigcup_{j\in J_i} U_{ij}$ is an
+              open cover of $U_i$, then $U = \bigcup_{i\in I}\bigcup_{j \in J_i} U_{ij}$
+              is an open cover of $U$.
+        \item If $U = \bigcup_{i\in I} U_i$ is an open cover, and $V \subseteq U$, then
+              $V = \bigcup_{i \in I} V \cap U_i$ is an open cover of $V$.
+    \end{enumerate}
+    Here we used that $U\times_W V = U\cap V$ for $U, V \subseteq W$,
+    which follows from $S \subseteq V, S \subseteq U \implies S \subseteq V\cap U$.
+\end{example}
+
+The following example is very close to the underlying
+site of condensed sets.
+\begin{example}
+    TODO: example of G-sets.
+\end{example}
 
 \subsubsection{Sheafification}
 In a lot of constructions, the natural thing we do, will end up
 being a presheaf, but not a sheaf in general. So, we will need some way to turn
-presheaves into sheaves. For this subsection we largely follow
-\cite{stacks-project}.
+presheaves into sheaves.
 \begin{prop}
     The fully faithful inclusion
     \begin{equation*}
@@ -373,9 +432,6 @@ We now have the following construction:
 
 Prove theorem 7.10.10 from stacks project...
 
-\subsection{On a Site}
-
-\subsubsection{Sites}
 \section{Sheaf Cohomology}
 Links to Algebraic Topology
 
