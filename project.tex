@@ -405,7 +405,8 @@ This allows the following reformulation:
         s_i|_{U_i \times_U U_j} = s_j|_{U_i \times_U U_j}\}.
     \end{equation*}
     If $\mcU \to \mcV$ is a morphism of coverings, there is an induced
-    map $\mcF(\mcV) \to \mcF(\mcU)$. Since $\{1_U\}$ is a cover
+    map $\mcF(\mcV) \to \mcF(\mcU)$. This construction is functorial.
+    Furthermore, since $\{1_U\}$ is a cover
     by the axioms of a site, this gives a map $\mcF(U) \cong \mcF(\{1_U\}) \to \mcF(\mcU)$.
     % This extends $\mcF$ to a functor $\mcF \colon \Cov(U)^{\opp} \to \Set$,
     % in the sense that $\mcF(\{1_U\}) = \mcF(U)$.
@@ -453,7 +454,15 @@ This allows the following reformulation:
         = (s_{\alpha(j)}|_{U_j})|_{U_i \times_U U_j}.
     \end{equation*}
 
-    The last claim is just the definition of sheaves on a site.
+    It remains to show that this construction is functorial, since
+    the final claim is just the definition of a sheaf of sites. Let,
+    to this purpose, $\mcU \to \mcV \to \mcW$ be maps of coverings,
+    with associated maps $\alpha\colon I \to J$ and $\beta \colon J \to K$.
+    The map $\mcF(\mcW) \to \mcF(\mcU)$ maps $(s_k)_{k\in K}$ to
+    $(s_{\beta(\alpha(i))}|_{U_i})_{i\in I}$. The other map is given by
+    first sending $(s_k)_{k \in K}$ to $(s_{\beta(j)}|_{V_j})_{j\in J}$,
+    which is then sent to $((s_{\beta(\alpha(i))}|_{V_{\alpha(i)}})|_{U_i})_{i\in I}$.
+    The result now follows by functoriality of $\mcF$.
 \end{proof}
 We now have the following construction:
 \begin{lemma}
@@ -484,7 +493,18 @@ We now have the following construction:
             &&\mcF(\mcV') \ar[ul] &\mcF(\mcU') \lar
         \end{tikzcd}
     \end{equation*}
-    TODO: show functoriality of $\mcF^+$ with $U \to V \to W$
+
+    It remains to show that this defines a functor $\mcC^{\opp}\to \Set$.
+    If we have morphisms $U\to V \to W$, then
+    \begin{equation*}
+        W_i \times_W U \cong (W_i \times_W V) \times_V U,
+    \end{equation*}
+    since both are pullbacks of $\begin{tikzcd}
+            [sep=small, cramped]
+            W_i \rar & W & U \lar
+        \end{tikzcd}$.
+    Since $\mcU \mapsto \mcF(\mcU)$ is a functor,
+    by the previous lemma, the result now follows.
 \end{proof}
 
 Prove theorem 7.10.10 from stacks project...
