@@ -218,7 +218,7 @@ For this subsection we largely follow
 To define a site, we collect all the essential
 properties that coverings of topological spaces have:
 \begin{definition}[Coverings and Sites]
-    A \emph{site} is a category $\mcC$ together
+    A \emph{site} is a small category $\mcC$ together
     with a set $\Cov(\mcC)$ of \emph{coverings} of
     $\mcC$, where the following axioms hold:
     \footnote{We force $\Cov(\mcC)$ to be a set since we will take limits
@@ -264,6 +264,33 @@ site of condensed sets.
     TODO: example of G-sets.
 \end{example}
 
+In this new context, we have to reword the definitions
+of presheaves and sheaves in a more abstract manner.
+\begin{definition}[Presheaves and Sheaves on a Site]
+    Let $\mcC$ be a small category. A \emph{presheaf on $\mcC$} is
+    a contravariant functor $\mcF \colon \mcC \to \Set$.
+    If $\mcC$ is a site, then a \emph{sheaf on $\mcC$} is a
+    presheaf $\mcF$, such that for any covering $\{U_i \to U\}_{i\in I}$,
+    the following diagram is an equalizer:
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcF(U) \rar["e"] &\prod\limits_{i\in I}\mcF(U_i)
+            \rar[shift left, "p_0^*"] \rar[shift right, "p_1^*"']
+            & \prod\limits_{i,j\in I}\mcF(U_i \times_U U_j)
+        \end{tikzcd}.
+    \end{equation*}
+    The map $e$ is given by $s \mapsto (s|_{U_i})_{i\in I}$.
+    For the second maps, take $i,j\in I$. Then we have projections
+    $p^{(i,j)}_0 \colon U_i \times_U U_j \to U_i$ and
+    $p^{(i,j)}_1 \colon U_i \times_U U_j \to U_j$.
+    These result in maps
+    $p^{(i,j), *}_0 \colon \mcF(U_i) \to \mcF(U_i \times_U U_j )$ and
+    $p^{(i,j), *}_1 \colon \mcF(U_j) \to \mcF(U_i \times_U U_j )$.
+    The maps $p_0^*$ and $p_1^*$ are
+    then given at component $i,j$ by mapping $(s_k)_{k\in I}$ to
+    $p^{(i,j), *}_0(s_i)$ and $p^{(i,j), *}_1(s_j)$ respectively.
+\end{definition}
+
 \subsubsection{Sheafification}
 In a lot of constructions, the natural thing we do, will end up
 being a presheaf, but not a sheaf in general. So, we will need some way to turn
@@ -271,7 +298,7 @@ presheaves into sheaves.
 \begin{prop}
     The fully faithful inclusion
     \begin{equation*}
-        \iota \colon \Sh(X) \injto \PSh(X),
+        \iota \colon \Sh(\mcC) \injto \PSh(\mcC),
     \end{equation*}
     admits a left adjoint $\mcF \to \mcF^\sharp$, ``sheafification''.
 \end{prop}
@@ -281,46 +308,52 @@ As it turns out, ``sheafification'' is actually a two-step process.
 The first step is making the presheaf separated, and then turning
 the separated presheaf into a sheaf.
 \begin{definition}
-    We say that a presheaf $\mcF$ is \emph{separated} if $\mcF(U) \injto \prod\limits_i \mcF(U_i)$
-    for any cover $U = \bigcup_i U_i$.
+    We say that a presheaf $\mcF$ is \emph{separated} if
+    $\mcF(U) \to \prod\limits_{i\in I} \mcF(U_i)$ is a monomorphism
+    for any cover $\{U_i \to U\}_{i\in I} \in \Cov(\mcC)$.
 \end{definition}
+\begin{remark}
+    Since any equalizer is a monomorphism, it follows from the definition
+    of sheaves on a site, that a sheaf is separated.
+\end{remark}
 We first have a few lemmas regarding limits of presheaves and sheaves.
 \begin{lemma}
-    Let $X$ be a topological space, then limits and
-    colimits exist in $\PSh(X)$. Additionally, for any $U\subseteq X$,
-    the functor $\PSh(X) \to \Set \colon \mcF \mapsto \mcF(U)$
+    Let $\mcC$ be a site, then limits and
+    colimits exist in $\PSh(\mcC)$. Additionally, for any $U\in \mcC$,
+    the functor $\PSh(\mcC) \to \Set \colon \mcF \mapsto \mcF(U)$
     commutes with all limits and colimits.
 \end{lemma}
 \begin{proof}
-    Let $\mcF \colon \mcZ \to \PSh(X)$ be a functor. We get a cone $(\mcF_{\lim}, p^z)$ by
+    Let $\mcF \colon \mcI \to \PSh(\mcC)$ be a diagram.
+    We get a cone $(\mcF_{\lim}, p^i)$ by
     moving to the images in $\Set$. In other words we take
-    $\mcF_{\lim} (U) = \lim_{z \in \mcZ} \mcF_z(U)$,
-    and $p^z_U \colon \lim_{z\in \mcZ}\mcF_z(U) \to \mcF_z(U)$.
-    For the restrictions, if $U\subseteq V$ we get a unique map
+    $\mcF_{\lim} (U) = \lim_{i \in \mcI} \mcF_i(U)$,
+    and $p^i_U \colon \lim_{i\in \mcI}\mcF_i(U) \to \mcF_i(U)$.
+    If $U\to V$ is a morphism in $\mcC$, we get a unique map
     $\mcF_{\lim}(V) \to \mcF_{\lim}(U)$, given by the fact
     that $\mcF_{\lim}(U)$ is a limit, and $\mcF_{\lim}(V)$ is a cone
-    on all the $\mcF_z(U)$ by composing the maps $\mcF_{\lim}(V) \to \mcF_z(V)$ with
-    the restrictions $\mcF_z(V) \to \mcF_z(U)$. So we see that $\mcF_{\lim}$
+    on all the $\mcF_i(U)$ by composing the maps $\mcF_{\lim}(V) \to \mcF_i(V)$ with
+    the maps $\mcF_i(V) \to \mcF_i(U)$. So we see that $\mcF_{\lim}$
     is indeed a presheaf.
     \begin{equation*}
         \begin{tikzcd}[column sep=small]
-            &&\mcF_{\lim}(V) \dar[dashed] \ar[ddll, bend right, "p^z_V"'] \ar[ddrr, bend left, "p^{z'}_V"]\\
-            &&\mcF_{\lim}(U) \ar[dl, "p^z_U"'] \ar[dr, "p^{z'}_U"]\\
-            \mcF_z(V) \rar &\mcF_z(U) \ar[rr] &&\mcF_{z'}(U) &\mcF_{z'}(V) \lar
+            &&\mcF_{\lim}(V) \dar[dashed] \ar[ddll, bend right, "p^i_V"'] \ar[ddrr, bend left, "p^{i'}_V"]\\
+            &&\mcF_{\lim}(U) \ar[dl, "p^i_U"'] \ar[dr, "p^{i'}_U"]\\
+            \mcF_i(V) \rar &\mcF_i(U) \ar[rr] &&\mcF_{i'}(U) &\mcF_{i'}(V) \lar
         \end{tikzcd}
     \end{equation*}
-    To see that the maps $p^z$ are morphisms of presheaves, we need
+    To see that the maps $p^i$ are morphisms of presheaves, we need
     to verify that the following diagram commutes:
     \begin{equation*}
         \begin{tikzcd}
-            \mcF_{\lim}(V) \dar \rar["p^z_V"] & \mcF_z(V) \dar \\
-            \mcF_{\lim}(U) \rar["p^z_U"] & \mcF_z(U)
+            \mcF_{\lim}(V) \dar \rar["p^i_V"] & \mcF_i(V) \dar \\
+            \mcF_{\lim}(U) \rar["p^i_U"] & \mcF_i(U)
         \end{tikzcd},
     \end{equation*}
     but that already follows from the previous diagram.
 
     Let us now verify that $\mcF_{\lim}$ is actually a limit.
-    If $(\mcG, g^z)$ is another cone, then for each $U\subseteq X$,
+    If $(\mcG, g^i)$ is another cone, then for each $U\in \mcC$,
     we get a unique map $\mcG(U) \to \mcF_{\lim}(U)$, such that the
     corresponding cone diagrams commute. It suffices to show that these
     maps combine to form a map of presheaves.
@@ -332,102 +365,126 @@ We first have a few lemmas regarding limits of presheaves and sheaves.
         \end{tikzcd}
         \iff
         \begin{tikzcd}
-            \mcG(V)\rar["g^z_V"] \dar & \mcF_{z}(V) \dar \\
-            \mcG(U)\rar["g^z_U"] & \mcF_{z}(U)
+            \mcG(V)\rar["g^i_V"] \dar & \mcF_{i}(V) \dar \\
+            \mcG(U)\rar["g^i_U"] & \mcF_{i}(U)
         \end{tikzcd}
-        \forall z\in \mcZ.
+        \forall i\in \mcI.
     \end{equation*}
     The commutativity of these last diagrams, is just saying that the
-    maps $g^z$ are presheaf morphisms, which is true by $(\mcG, g^z)$ being a cone.
+    maps $g^i$ are presheaf morphisms, which is true by $(\mcG, g^i)$ being a cone.
 \end{proof}
 The big difference between sheaves and presheaves, is that we can glue
-things together defined on an open cover. The trick will be to force
+things together defined on a cover. The trick will be to force
 the presheaf to behave as we want. Let us try and make this more precise.
 
-Let $U \subset X$ be an open set of a topological space $X$.
-We obtain a category $\Cov(U)$ with objects the open coverings of $U$,
-and morphisms given by refinements.
-If $\mcU = \{U_i\}_{i\in I}$ and $\mcV= \{V_j\}_{j\in J}$ are open covers of $U$, we say that $\mcU$
-is a \emph{refinement} of $\mcV$ if there is a map $\alpha \colon I \to J$
-such that $U_i \subseteq V_{\alpha(j)}$ for all $i\in I$.
-% \begin{remark}
-%     Note that $\Cov(-)$ is a contravariant functor. Loosely speaking,
-%     if $U\subseteq V \subseteq W$, there are maps (functors actually) $\Cov(V) \to \Cov(U)$
-%     and $\Cov(W) \to \Cov(V)$ given by mapping $\{V_i\}$ to $\{V_i \cap U\}$,
-%     and $\{W_i\} \to \{W_i \cap V\}$ which respect composition.
-% \end{remark}
+So far we have just talked about coverings as objects. We can
+also consider maps between coverings. If $\mcU = \{U_i \to U\}_{i\in I}$
+and $\mcV = \{V_j \to V\}_{j \in J}$ are two coverings, a morphism
+of coverings between $\mcU$ and $\mcV$ is
+a morphism $U \to V$ and a map $\alpha \colon I \to J$
+together with morphisms $U_i \to V_{\alpha(i)}$
+such that
+\begin{equation*}
+    \begin{tikzcd}
+        U_i \ar[d] \rar & V_{\alpha(i)} \dar\\
+        U \rar & V
+    \end{tikzcd}
+\end{equation*}
+commutes. If $U = V$ and $U \to V$ is the identity,
+we call $\mcU$ a \emph{refinement} of $\mcV$.
+For a $ U \in \mcC$ the coverings together with refinements
+gives a category $\Cov(U)$.
 This allows the following reformulation:
 \begin{lemma}
-    Let $\mcF$ be a presheaf on a topological space $X$.
-    For an open cover $\mcU$ of $U\subseteq X$, define
+    Let $\mcF$ be a presheaf on a site $\mcC$.
+    For $U \in \mcC$ and a cover $\mcU \in \Cov(U)$, define
     $\mcF(\mcU)$ as the following equalizer:
     \begin{equation*}
-        \tilde{\mcF}(\mcU) =
+        \mcF(\mcU) =
         \{(s_i)_{i\in I} \in \prod\limits_{i\in I}\mcF(U_i)\mid
-        s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}\}.
+        s_i|_{U_i \times_U U_j} = s_j|_{U_i \times_U U_j}\}.
     \end{equation*}
-    This defines a functor $\tilde{\mcF} \colon \Cov(U)^{\opp} \to \Set$, and there
-    is a canonical map $\mcF(U) \to \tilde{\mcF}(\mcU)$.
-    The presheaf $\mcF$ is a sheaf if and only if this map is bijective
+    If $\mcU \to \mcV$ is a morphism of coverings, there is an induced
+    map $\mcF(\mcV) \to \mcF(\mcU)$. Since $\{1_U\}$ is a cover
+    by the axioms of a site, this gives a map $\mcF(U) \cong \mcF(\{1_U\}) \to \mcF(\mcU)$.
+    % This extends $\mcF$ to a functor $\mcF \colon \Cov(U)^{\opp} \to \Set$,
+    % in the sense that $\mcF(\{1_U\}) = \mcF(U)$.
+    The presheaf $\mcF$ is a sheaf if and only if the map
+    $\mcF(U) \to \mcF(\mcU)$ is bijective
     for every cover $\mcU$.
 \end{lemma}
 \begin{proof}
-    Given a refinement $\mcU$ of $\mcV$, we have the map
-    $\tilde{\mcF}(\mcV) \to \tilde{\mcF}(\mcU)$ given by
+    Let $\mcU \to \mcV$ be a map of coverings. We have the following
+    commutative diagram:
+    \begin{equation*}
+        \begin{tikzcd}
+            & U_i \rar \dar &V_{\alpha(i)} \dar \\
+            U_i \times_U U_j \ar[ru] \ar[rd]
+            & U \rar & V
+            & V_{\alpha(i)} \times_V V_{\alpha(j)} \ar[lu] \ar [ld] \\
+            & U_j \rar \uar & V_{\alpha(j)} \uar
+        \end{tikzcd},
+    \end{equation*}
+    which gives a unique map $U_i \times_U U_j \to V_{\alpha(i)} \times_V V_{\alpha(j)}$
+    making the diagram commute. Applying $\mcF$ gives the diagram:
+
+    \begin{equation}\label{eq:fibre_product_coverings}
+        \begin{tikzcd}
+            \mcF(U_i) \dar &\mcF(V_{\alpha(i)}) \lar \dar \\
+            \mcF(U_i \times_U U_j) & \mcF(V_{\alpha(i)} \times_V V_{\alpha(j)} )  \lar \\
+            \mcF(U_j) \uar &\mcF(V_{\alpha(j)}) \lar \uar
+        \end{tikzcd}
+        .
+    \end{equation}
+
+    We can now define $\mcF(\mcV) \to \mcF(\mcU)$ by
     \begin{equation*}
         (s_j)_{j\in J} \mapsto ((s_{\alpha(i)})|_{U_i})_{i\in I}.
     \end{equation*}
-    This is well-defined, since
-    \begin{align*}
-        (s_{\alpha(i)}|_{U_i})|_{U_i \cap U_j}
-         & = s_{\alpha(i)}|_{U_i \cap U_j}
-         &                                                      & (U_i \cap U_j \subseteq U_i)                              \\
-         & = (s_{\alpha(i)}|_{V_{\alpha(i)}\cap V_{\alpha(j)}})
-        |_{U_i \cap U_j}
-         &                                                      & (U_i \cap U_j \subseteq V_{\alpha(i)} \cap V_{\alpha(j)}) \\
-         & = (s_{\alpha(j)}|_{V_{\alpha(i)}\cap V_{\alpha(j)}})
-        |_{U_i \cap U_j}
-         &                                                      & (\text{definition of } \tilde{\mcF}(\mcV))                \\
-         & = (s_{\alpha(j)})|_{U_i \cap U_j}
-         &                                                      & (U_i \cap U_j \subseteq V_{\alpha(i)} \cap V_{\alpha(j)}) \\
-         & = (s_{\alpha(j)}|_{U_j})|_{U_i \cap U_j},
-    \end{align*}
-    where we used repeatedly that $(s|_{T})|_{S} = s|_{S}$ if $S\subseteq T$.
-    Functoriality of $\tilde{\mcF}$ is now easily verified.
-    Indeed, if $\mcU$ is a refinement of $\mcV$ which is a refinement
-    of $\mcW$, we have maps $\alpha\colon I \to J$ and $\beta \colon J \to K$
-    such that $U_i \subseteq V_{\alpha(i)}$ and $V_j \subseteq W_{\beta(j)}$
-    for $i\in I, j\in J$. Hence, $U_i \subseteq V_{\alpha(i)} \subseteq W_{\beta(\alpha(i))}$,
-    so that
+    That this map is well-defined follows from \cref{eq:fibre_product_coverings}.
+    Indeed, if $(s_j)_{j\in J} \in \mcF(\mcV)$, then
     \begin{equation*}
-        ((s_{\beta(\alpha(i))})|_{V_{\alpha(i)}}|_{U_i})_{i\in I}
-        = ((s_{\beta(\alpha(i))})|_{U_i})_{i\in I} ,
+        (s_{\alpha(j)}|_{V_{\alpha(i)}\times_U V_{\alpha(j)}})|_{U_i \times U_j}
+        = (s_{\alpha(i)}|_{V_{\alpha(i)}\times_U V_{\alpha(j)}})|_{U_i \times U_j},
     \end{equation*}
-    which is what we needed to show.
+    and hence
+    \begin{equation*}
+        (s_{\alpha(i)}|_{U_i})|_{U_i \times_U U_j}
+        = (s_{\alpha(j)}|_{U_j})|_{U_i \times_U U_j}.
+    \end{equation*}
 
-    Since $\{U\}$ is itself a cover of $U$, and $\mcF(U) = \tilde{\mcF}(\{U\})$,
-    we now get a canonical map $\mcF(U) \to \tilde{\mcF}(\mcU)$ for any open cover
-    $\mcU$ of $U$. The final claim follows from \cref{rem:cat_def_sheaf}.
+    The last claim is just the definition of sheaves on a site.
 \end{proof}
 We now have the following construction:
 \begin{lemma}
-    Given a presheaf of $\mcF$ on a space $X$, we can construct
+    Given a presheaf of $\mcF$ on a site $\mcC$, we can construct
     a new presheaf $\mcF^+$ by setting
     \begin{equation*}
-        \mcF^+(U) = \colim_{\mcU \in \Cov(U)} \tilde{\mcF}(\mcU),
+        \mcF^+(U) = \colim_{\mcU \in \Cov(U)} \mcF(\mcU),
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    We omit the details here, since the arguments are very similar
-    to the previous two lemmas.
-
-    Let us just show how $\mcF^+$ acts on morphisms. Consider
-    $U \subseteq V$. Then this gives a map $\Cov(V) \to \Cov(U)$
-    by mapping a cover $\{V_i\}_{i\in I}$ of $V$ to the cover $\{V_i \cap U\}_{i\in I}$
-    of $U$. We get induced maps $\tilde{\mcF}(\mcU) \to \tilde{\mcF}(\mcV)$,
-    and we obtain maps $\tilde{\mcF}(\mcU) \to \mcF^+(V)$.
+    Let us first show how $\mcF^+$ acts on morphisms. Consider
+    a morphism $U \to V$. Then this gives a map $\Cov(V) \to \Cov(U)$
+    by mapping a cover $\{V_i \to V\}_{i\in I}$ of $V$ to the cover
+    $\{V_i \times_V U \to U\}_{i\in I}$ of $U$,
+    which exists by the third axiom of coverings.
+    From the previous lemma there are induced maps
+    ${\mcF}(\mcU) \to {\mcF}(\mcV)$.
+    Since we have maps $\mcF(\mcV) \to \mcF^+(V)$,
+    we obtain maps ${\mcF}(\mcU) \to \mcF^+(V)$.
     By the universal property of the colimit, this gives a unique map
     $\mcF^+(V) \to \mcF^+(U)$, making the cone diagrams commute.
+    \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+            &&\mcF^+(U) \ar[ddll, bend right, leftarrow]
+            \ar[ddrr, bend left, leftarrow]\\
+            &&\mcF^+(V)\uar[dashed]\\
+            \mcF(\mcU) \rar &\mcF(\mcV)\ar[ur] \ar[rr]
+            &&\mcF(\mcV') \ar[ul] &\mcF(\mcU') \lar
+        \end{tikzcd}
+    \end{equation*}
+    TODO: show functoriality of $\mcF^+$ with $U \to V \to W$
 \end{proof}
 
 Prove theorem 7.10.10 from stacks project...
