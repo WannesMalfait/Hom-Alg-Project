@@ -296,6 +296,7 @@ In a lot of constructions, the natural thing we do, will end up
 being a presheaf, but not a sheaf in general. So, we will need some way to turn
 presheaves into sheaves.
 \begin{prop}
+    \label{prop:sheafification}
     The fully faithful inclusion
     \begin{equation*}
         \iota \colon \Sh(\mcC) \injto \PSh(\mcC),
@@ -408,8 +409,6 @@ This allows the following reformulation:
     map $\mcF(\mcV) \to \mcF(\mcU)$. This construction is functorial.
     Furthermore, since $\{1_U\}$ is a cover
     by the axioms of a site, this gives a map $\mcF(U) \cong \mcF(\{1_U\}) \to \mcF(\mcU)$.
-    % This extends $\mcF$ to a functor $\mcF \colon \Cov(U)^{\opp} \to \Set$,
-    % in the sense that $\mcF(\{1_U\}) = \mcF(U)$.
     The presheaf $\mcF$ is a sheaf if and only if the map
     $\mcF(U) \to \mcF(\mcU)$ is bijective
     for every cover $\mcU$.
@@ -503,12 +502,48 @@ We now have the following construction:
             [sep=small, cramped]
             W_i \rar & W & U \lar
         \end{tikzcd}$.
-    Since $\mcU \mapsto \mcF(\mcU)$ is a functor,
+    So $\Cov(-)$ is a functor, and
+    since $\mcU \mapsto \mcF(\mcU)$ is a functor
     by the previous lemma, the result now follows.
 \end{proof}
+It is possible to be more explicit about how $\mcF^+$ looks like.
+For two coverings $\mcU, \mcU'$ of $U \in \mcC$,
+we have a common refinement $\{U_i \times_U U'_j \to U\}_{i\in I, j\in J}$
+which exists by the second and third axioms.
+Furthermore, one can show that if $f,g\colon \mcU \to \mcV$
+are refinements, then $\mcF(f) = \mcF(g)$ (\cite[Lemma 7.10.6]{stacks-project}).
+This gives that $\Cov(U)^{\opp} \to \Set$ is a filtered
+diagram. So
+\begin{equation*}
+    \mcF^+(U) =\Bigl( \coprod\limits_{\mcU \in \Cov(U)} \mcF(\mcU)\Bigr)/ \sim,
+\end{equation*}
+Where $s \sim s'$ if and only if there are covers $\mcU, \mcU'$ with
+$s\in \mcF(\mcU), s' \in \mcF(\mcU')$ and a common refinement $\mcV$ such that
+\begin{equation*}
+    s_{\alpha(i)}|_{V_i} = s'_{\beta(i)}|_{V_i}, \, \forall i\in I.
+\end{equation*}
+We now come to the main theorem, from which
+\cref{prop:sheafification} will follow.
+\begin{theorem}
+    Let $\mcF$ be a presheaf on a site. Then
+    \begin{enumerate}
+        \item The presheaf $\mcF^+$ is separated.
+        \item If $\mcF$ is separated, then $\mcF^+$ is a sheaf.
+        \item If $\mcF$ is a sheaf, then $\mcF \to \mcF^+$ is an isomorphism.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}
+        \item We need to show that $s \mapsto (s|_{U_i})_{i\in I}$ is injective
+              for any cover $\{U_i \to U\}_{i \in I} \in \Cov(\mcC)$.
+              Take $s, s' \in \mcF^+(U)$ such that
+              $(s|_{U_i})_{i\in I} = (s'|_{U_i})_{i\in I}$ for some
+              cover $\{U_i \to U\}_{i\in I}$.
 
-Prove theorem 7.10.10 from stacks project...
 
+    \end{enumerate}
+\end{proof}
 \section{Sheaf Cohomology}
 Links to Algebraic Topology
 
