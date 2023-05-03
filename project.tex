@@ -319,6 +319,7 @@ the separated presheaf into a sheaf.
 \end{remark}
 We first have a few lemmas regarding limits of presheaves and sheaves.
 \begin{lemma}
+    \label{lem:lims_colims_presheaves}
     Let $\mcC$ be a site, then limits and
     colimits exist in $\PSh(\mcC)$. Additionally, for any $U\in \mcC$,
     the functor $\PSh(\mcC) \to \Set \colon \mcF \mapsto \mcF(U)$
@@ -397,6 +398,7 @@ For a $ U \in \mcC$ the coverings together with refinements
 gives a category $\Cov(U)$.
 This allows the following reformulation:
 \begin{lemma}
+    \label{lem:presheaf_of_cover}
     Let $\mcF$ be a presheaf on a site $\mcC$.
     For $U \in \mcC$ and a cover $\mcU \in \Cov(U)$, define
     $\mcF(\mcU)$ as the following equalizer:
@@ -539,10 +541,102 @@ We now come to the main theorem, from which
               for any cover $\{U_i \to U\}_{i \in I} \in \Cov(\mcC)$.
               Take $s, s' \in \mcF^+(U)$ such that
               $(s|_{U_i})_{i\in I} = (s'|_{U_i})_{i\in I}$ for some
-              cover $\{U_i \to U\}_{i\in I}$.
-
-
+              cover $\mcU = \{U_i \to U\}_{i\in I}$.
+              By the description above of $\mcF^+$, we know that
+              we can find covers $\mcV$ and $\mcV'$ of $U$,
+              such that $s\in \mcF(\mcV)/\sim$ and $s'\in\mcF (\mcV')/\sim$.
+              Let $\mcW$ be a common refinement of the three covers
+              $\mcU, \mcV, \mcV'$. Since it is a refinement of $\mcU$,
+              we have that
+              \begin{equation*}
+                  s'|_{W_j} = (s|_{U_{\alpha(j)}})|_{W_j} =
+                  (s|_{U_{\alpha(j)}})|_{W_j} = s'|_{W_j},
+              \end{equation*}
+              so that $s=s'$.
+        \item We need to verify the sheaf condition. Let $\{U_i \to U\}_{i\in I}$
+              be a cover of $U$, and for each $i\in I$, $s_i \in \mcF^+(U_i)$ such that
+              $s_i |_{U_i \times_U U_j} = s_j |_ {U_i \times_U U_j}$ for every $i,j \in I$.
+              Since $\mcF$ is separated, the map $s \to (s|{U_i})_{i\in I}$ is injective.
+              It is hence enough to show that there is some $s\in \mcF^+(U)$ with
+              $s|_{U_i} = s_i$ for all $i\in I$.
+              For each $i\in I$ we can find a cover $\mcU_i = \{U_{ij} \to U_i\}$
+              such that $s_i \in \mcF(\mcU_i)/\sim$, and hence $s_{ij} \in \mcF(U_{ij})$
+              such that $s_i |_{U_{ij}} = s_{ij}/\sim$. In the same way
+              as \cref{lem:presheaf_of_cover} we get that
+              \begin{equation*}
+                  s_{ij}|_{U_{ij}\times_U U_{i'j'}} = s_{i'j'}|_{U_{ij}\times_U U_{i'j'}}.
+              \end{equation*}
+              So, $(s_{ij})_{i,j\in I} \in \mcF(\{U_{ij}\to U\}_{i,j\in I})$, and we can
+              take $s = (s_{ij})_{i,j\in I}/\sim$.
+              We just need to verify that $s|_{U_i} = s_i$. This follows
+              from $(s|_{U_i})|_{U_{ij}} = s|_{U_{ij}} = s_i|_{U_{ij}}$, as $\mcF^+$ is
+              also separated.
+        \item This follows from \cref{lem:presheaf_of_cover}.
     \end{enumerate}
+\end{proof}
+
+With this we are now ready to prove \cref{prop:sheafification}.
+We define $\mcF^\sharp = \mcF^{++}$.
+\begin{proof}[Proof of \cref{prop:sheafification}]
+    We first note that for any map of presheaves $\alpha\colon \mcF \to \mcG$,
+    we have a commutative diagram
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcF \rar \dar["\alpha"] & \mcF^+ \dar["\alpha^+"] \\
+            \mcG \rar & \mcG^+
+        \end{tikzcd},
+    \end{equation*}
+    where $\alpha^+_U(s/ \sim) = \alpha_U(s)/\sim$.
+    That this commutes, is by construction of $\alpha^+$.
+    Using this, we can now show that
+    \begin{equation*}
+        \Hom_{\Sh(\mcC)}(\mcF^\sharp, \mcG) = \Hom_{\PSh(\mcC)}(\mcF, \iota(\mcG)).
+    \end{equation*}
+    The bottom row of the diagram
+    \begin{equation*}
+        \begin{tikzcd}
+            \mcF \rar \dar &\mcF^+ \dar \rar & \mcF^{++} = \mcF^{\sharp} \dar \\
+            \iota(\mcG) \rar  &\iota(\mcG)^+  \rar & \iota(\mcG)^{++} = \mcG^{\sharp}
+        \end{tikzcd}
+        ,
+    \end{equation*}
+    consists of isomorphisms by the previous theorem.
+    So, any map $\mcF \to \iota(\mcG)$ gives rise to a map
+    $\mcF^\sharp \to \mcG$.
+    Conversely, since every $s\in \mcF^\sharp(U)$ comes from sections
+    in $\mcF(U)$, we can lift any map $\mcF^\sharp \to \mcG$
+    to a map $\mcF \to \mcG$.
+\end{proof}
+
+As an immediate consequence, we get that $(-)^\sharp$
+commutes with all colimits. So $\Sh(\mcC)$ has all colimits,
+since $\PSh(\mcC)$ has all colimits by \cref{lem:lims_colims_presheaves}.
+We can say more:
+\begin{corollary}
+    The functor $(-)^\sharp \PSh(\mcC) \to \Sh(\mcC)$ is exact.
+\end{corollary}
+\begin{proof}
+    Since it is a left adjoint, it is right exact. On the other hand,
+    colimits over filtered diagrams commute with finite limits.
+    So, $(-)^\sharp$ is left exact as functor between presheaves.
+    We claim that if $\mcI \to \Sh(\mcC)$ is a diagram, then
+    the limit $\mcF = \lim_i \mcF_i$ as presheaves is a sheaf.
+    For this we show that $\mcF(\mcU) \cong \mcF(U)$ for any cover $\mcU = \{U_j \to U\}$.
+    Take $(s_j)_{j\in J} \in \mcF(\mcU)$, then by definition of the
+    limit, we can project these to elements $(s_{ij})_{j \in J} \in \mcF_i(\mcU)$.
+    Since each $\mcF_i$ is a sheaf, we have unique elements $s_i \in \mcF_i(U)$
+    such that $s_i |_{U_j} = s_{ij}$. In order for $(s_i)_{i\in \mcI}$ to be
+    an element of $\mcF(U)$ we need that for $f\colon i\to i'$ in $\mcI$,
+    $\mcF(f)(s_i) = s_{i'}$. This follows, as $s_i|_{U_j}$ is mapped to $s_{i'}|_{U_j}$
+    for all $j\in J$, and hence $s_i$ is mapped to $s_{i'}$ because
+    $\mcF_{i'}$ is a sheaf. We have $s = (s_i)_{i\in \mcI} \in \mcF(U)$,
+    and by the universal property of the limit
+    \begin{equation*}
+        s|_{U_j} = s_j \iff s_i|_{U_j} = s_{ij}\; \forall j\in J,
+    \end{equation*}
+    which holds by construction.
+    Hence, the claim holds, and $(-)^\sharp$ is also right exact as a functor
+    into sheaves.
 \end{proof}
 \section{Sheaf Cohomology}
 Links to Algebraic Topology
