@@ -144,6 +144,10 @@ These form a category. We will write $\PSh(X)$ for the category of presheaves of
 sets on $X$, and $\Sh(X)$ for the category of sheaves of sets on $X$.
 In the same way, we write $\Ab(X), \Ring(X), \Vect(X),\dots $ for the category of
 sheaves of abelian groups, rings, vector spaces, \dots on $X$.
+\begin{remark}
+    We can "recover" the underlying space, by taking $X = \{*\}$,
+    the one-point space. We have $\Sh(*) = \Set, \Ab(*) = \Ab, \dots$
+\end{remark}
 
 \subsubsection{Examples}
 To solidify our understanding of sheaves, it will be beneficial to look
@@ -258,10 +262,40 @@ canonical example.
     which follows from $S \subseteq V, S \subseteq U \implies S \subseteq V\cap U$.
 \end{example}
 
-The following example is very close to the underlying
-site of condensed sets.
+The following example is still quite similar to the previous
+example. The underlying site of a condensed set will be similar
+to this site.
 \begin{example}
-    TODO: example of G-sets.
+    Let $G$ be a group, then we can consider the category
+    of all $G$-sets, i.e. sets with a corresponding action
+    by the group $G$. Morphisms are given by maps $f \colon X \to Y$
+    satisfying $g\cdot f(x) = f(g\cdot x)$, i.e. $G$-equivariant
+    maps. To make this into a site, we define the covers to be the
+    families of jointly surjective maps. In other words
+    $\{f_i \colon X_i \to X\}_{i\in I}$ is a cover if
+    $\bigcup_{i\in I}f_i(X_i) = X$. Let us verify the axioms:
+    \begin{enumerate}
+        \item If $f \colon X \to Y$ is an isomorphism, then
+              in particular it is surjective, so $\{f \colon X \to Y\}$ is a cover
+              of $Y$
+        \item If $\{f_i \colon X_i \to Y\}_{i\in I}$ is jointly surjective, and
+              for each $i\in I$ the family $\{f_{ij} \colon X_{ij} \to X_j\}_{j\in J}$ is jointly
+              surjective, then so is $\{f_i \circ f_{ij}\colon X_{ij} \to Y\}_{i\in I, j\in J}$.
+        \item Let $\{f_i \colon X_i \to Y\}_{i\in I}$ be a cover,
+              and $f\colon T \to Y$ a $G$-equivariant map. We claim that the pullback
+              $X_i \times_Y T$ exists and is given by
+              $S = \{(x,t)\in X_i \times T \mid f_i(x) = f(t)\}$.
+              This is a $G$-set, as if $f_i(x) = f(t)$, then
+              \begin{equation*}
+                  f_i(g\cdot x) = g\cdot f_i(x) = g\cdot f(t) = f(g \cdot t).
+              \end{equation*}
+              Since $S$ is the pullback in $\Set$ and any $G$-equivariant map
+              is in particular a map of sets, the claim follows.
+              To see that the projection maps $\{X_i \times_Y T \to T\}$
+              are jointly surjective, take $t\in T$. There exists $i\in I$
+              such that $f(t) \in f_i(X_i)$, so $(x_i, t) \in X_i \times_Y T$
+              for some $x_i \in X_i$.
+    \end{enumerate}
 \end{example}
 
 In this new context, we have to reword the definitions
@@ -310,13 +344,35 @@ The first step is making the presheaf separated, and then turning
 the separated presheaf into a sheaf.
 \begin{definition}
     We say that a presheaf $\mcF$ is \emph{separated} if
-    $\mcF(U) \to \prod\limits_{i\in I} \mcF(U_i)$ is a monomorphism
+    $\mcF(U) \to \prod\limits_{i\in I} \mcF(U_i)$ is injective
     for any cover $\{U_i \to U\}_{i\in I} \in \Cov(\mcC)$.
 \end{definition}
 \begin{remark}
     Since any equalizer is a monomorphism, it follows from the definition
     of sheaves on a site, that a sheaf is separated.
 \end{remark}
+\begin{example}
+    \label{exmp:bad_presheaves}
+    The presheaf $\mcF$ on a topological space $X$, which maps every
+    open to the same set $Y \neq \{*\}$ is not separated, as
+    \begin{equation*}
+        Y = \mcF(\emptyset) \to \prod_{i \in \emptyset} = \{*\},
+    \end{equation*}
+    is not injective if $Y \neq \{*\}$.
+
+    On the other hand, the presheaf $\mcG$ on a topological space
+    $X$ which maps every open $U$ to the constant functions $U \to Y$
+    for some space $Y$, is separated but not a sheaf. After all,
+    if $U = \cup_i U_i$ is an open cover of $U$, and $f,g \in \mcG(U)$
+    are such that $f|_{U_i} = g|_{U_i}$ then $f = g$, since any $x\in U$
+    is contained in some $U_i$, and hence $f(x) = f|_{U_i}(x) = g|_{U_i}(x) = g(x)$.
+    Since there is only a single function $\emptyset \to Y$ there are no
+    problems with empty coverings. $\mcG$ fails to be a sheaf
+    in general, since if $U = U_1 \cup U_2$ with $U_1 \cap U_2 = \emptyset$
+    and $U_1 \neq \emptyset \neq U_2$, then we can't ``glue'' the functions
+    $f \colon U_1 \to Y, f(x) = y_1$ and $g\colon U_2 \to Y, f(x) =y_2$
+    together to a constant function on $U$ if $y_1 \neq y_2$.
+\end{example}
 We first have a few lemmas regarding limits of presheaves and sheaves.
 \begin{lemma}
     \label{lem:lims_colims_presheaves}
@@ -613,7 +669,7 @@ commutes with all colimits. So $\Sh(\mcC)$ has all colimits,
 since $\PSh(\mcC)$ has all colimits by \cref{lem:lims_colims_presheaves}.
 We can say more:
 \begin{corollary}
-    The functor $(-)^\sharp \PSh(\mcC) \to \Sh(\mcC)$ is exact.
+    The functor $(-)^\sharp\colon \PSh(\mcC) \to \Sh(\mcC)$ is exact.
 \end{corollary}
 \begin{proof}
     Since it is a left adjoint, it is right exact. On the other hand,
@@ -625,24 +681,98 @@ We can say more:
     Take $(s_j)_{j\in J} \in \mcF(\mcU)$, then by definition of the
     limit, we can project these to elements $(s_{ij})_{j \in J} \in \mcF_i(\mcU)$.
     Since each $\mcF_i$ is a sheaf, we have unique elements $s_i \in \mcF_i(U)$
-    such that $s_i |_{U_j} = s_{ij}$. In order for $(s_i)_{i\in \mcI}$ to be
-    an element of $\mcF(U)$ we need that for $f\colon i\to i'$ in $\mcI$,
+    such that $s_i |_{U_j} = s_{ij}$.
+
+    We now want an element $s\in \mcF(U)$ with projections equal to the $s_i$.
+    Choosing an element of $\mcF(U)$, is the same as giving a map $\{*\} \to \mcF(U)$,
+    which by the universal property of the limit is the same as giving a cone
+    $(\{*\}, \lambda_i)$. Let $\lambda_i(*) = s_i$, then we just need to verify
+    that this defines a cone.
+    We need that for $f\colon i\to i'$ in $\mcI$,
     $\mcF(f)(s_i) = s_{i'}$. This follows, as $s_i|_{U_j}$ is mapped to $s_{i'}|_{U_j}$
     for all $j\in J$, and hence $s_i$ is mapped to $s_{i'}$ because
-    $\mcF_{i'}$ is a sheaf. We have $s = (s_i)_{i\in \mcI} \in \mcF(U)$,
+    $\mcF_{i'}$ is a sheaf. So we have a unique $s\in \mcF(U)$,
     and by the universal property of the limit
     \begin{equation*}
-        s|_{U_j} = s_j \iff s_i|_{U_j} = s_{ij}\; \forall j\in J,
+        s|_{U_j} = s_j \iff s_i|_{U_j} = s_{ij}\; \forall i\in I,
     \end{equation*}
     which holds by construction.
     Hence, the claim holds, and $(-)^\sharp$ is also right exact as a functor
     into sheaves.
 \end{proof}
-\section{Sheaf Cohomology}
-Links to Algebraic Topology
+To get a better understanding of sheafification, let us work out
+the process of sheafification for some presheaves.
+\begin{example}
+    We consider the presheaf $\mcF$ of \cref{exmp:bad_presheaves}.
+    To calculate $\mcF^+$ we use that
+    \begin{equation*}
+        \mcF^+(U) = \Bigl(\coprod\limits_{\mcU \in \Cov(U)}\mcF(\mcU)\Bigr)/ \sim.
+    \end{equation*}
+    If $U$ is non-empty, then
+    \begin{equation*}
+        \mcF(\mcU) = \{(y_i)_{i\in I}\in \prod_{i\in I} Y \mid y_i = y_j\; \forall i,j \in I\}
+        = \{(y)_{i\in I}\mid y\in Y\}
+    \end{equation*}
+    for any cover $\mcU$ of $U$. Take $(y)_{i\in I} \in \mcF(\mcU)$, and
+    $(y')_{j\in J} \in \mcF(\mcU')$. For any common refinement $\mcV$ of
+    $\mcU$ and $\mcU'$, we have $(y_{\alpha(i)})|_{V_i} = y$ and $(y'_{\beta(i)})|_{V_i} = y'$
+    so that $(y)_{i\in I} \sim (y')_{j\in J} \iff y = y'$.
+    So, we find again that $\mcF^+(U) = Y$ as long as $U \neq \emptyset$.
 
-Follow \cite{Tu2022IntroductionSC}?
-Maybe look at other things as well?
+    Now, when $U = \emptyset$ there are two covers: $\{\emptyset \to \emptyset\}$,
+    and the empty covering, $\{\}_{i\in \emptyset}$. We have
+    $\mcF(\{\emptyset \to \emptyset\}) = \mcF(\emptyset) = Y$,
+    while $\mcF(\{\}_{i\in \emptyset}) = \{*\}$.
+    Now every $y\in Y$ is equivalent to $*$, as $\{\}_{i\in \emptyset}$
+    is a common refinement of the two covers, and the equivalence
+    condition becomes an empty statement in this case. As such we find
+    $\mcF^+(\emptyset) = \{*\}$.
+    Note that $\mcF^+$ is isomorphic to $\mcG$ from \cref{exmp:bad_presheaves}.
+    After all, a constant function $U \to Y$ is the same
+    as choosing an element in $Y$.
+
+    We now have a separated presheaf $\mcF^+$. What does the sheaf
+    $\mcF^\sharp$ look like? Let us first consider the case that $U$
+    is empty. Then for both covers $\{\emptyset \to \emptyset\}$ and
+    $\{\}_{i\in \emptyset}$ we get $\mcF^+(\mcU) = \{*\}$.
+    So $\mcF^\sharp(\emptyset) = \{*\}$.
+
+    More interesting is what happens when $U \neq \emptyset$.
+    Let $\{U_i \to U\}_{i\in I}$ be a cover such that
+    none of the $U_i$ are empty. Then
+    \begin{align*}
+        \mcF^+(\mcU) & =
+        \{(y_i)_{i\in I}\in \prod_{i\in I} Y \mid
+        y_i|_{U_i \cap U_j} = y_j|_{U_i \cap U_j}\; \forall i,j \in I\} \\
+                     & = \{(y_i)_{i\in I}\in \prod_{i\in I}Y\mid
+        y_i = y_j,\, U_i \cap U_j \neq \emptyset\},
+    \end{align*}
+    as $\mcF^+(\emptyset) = \{*\}$ and hence $y|_{U_i \cap U_j} = *$
+    if $U_i \cap U_j = \emptyset$ for any $y \in Y$.
+    We can view elements of $\mcF^+(\mcU)$ as functions $s\colon U \to Y$,
+    that are constant on each of the opens $U_i$.
+    Adding empty sets
+    to the cover does not really change anything: the elements of
+    $\mcF(\mcU)$ will be $*$ at the indices for which $U_i = \emptyset$.
+    Under $\sim$ such functions will all be the same.
+    Take, $f \in \mcF^\sharp(U)$. Then there is some cover
+    $\mcU = \{U_i\}_{i\in I}$ such that $f$
+    arises from $\mcF^+(\mcU)$. Consequently, for each $x\in U$,
+    there is some $U_i$ containing $x$, such that $f$
+    is constant on $U_i$. In other words, $f$ is a locally
+    constant function on $U$. If we equip $Y$ with the discrete
+    topology then this is equivalent to saying that $f\colon U \to Y$
+    is continuous.
+
+    The sheaf $\mcF^\sharp$ is (perhaps a little confusingly) called the
+    \emph{constant sheaf with value $Y$}.
+\end{example}
+\section{Sheaf Cohomology}
+
+In the previous section we have explored some
+fundamental properties of sheaves of sets.
+We will now be looking at sheaves of abelian groups,
+which form a very interesting and rich abelian category.
 \section{Condensed Sets}
 \bibliographystyle{alpha}
 \bibliography{references.bib}
