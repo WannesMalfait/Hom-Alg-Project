@@ -12,7 +12,7 @@
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\colim}{colim}
 
-\title{A Solid Exploration of Condensed Mathematics}
+\title{A Fluid Introduction to Condensed Mathematics}
 \author{Wannes Malfait}
 \date{}
 
@@ -668,9 +668,10 @@ As an immediate consequence, we get that $(-)^\sharp$
 commutes with all colimits. So $\Sh(\mcC)$ has all colimits,
 since $\PSh(\mcC)$ has all colimits by \cref{lem:lims_colims_presheaves}.
 We can say more:
-\begin{corollary}
+\begin{prop}
+    \label{prop:sheafification_exact}
     The functor $(-)^\sharp\colon \PSh(\mcC) \to \Sh(\mcC)$ is exact.
-\end{corollary}
+\end{prop}
 \begin{proof}
     Since it is a left adjoint, it is right exact. On the other hand,
     colimits over filtered diagrams commute with finite limits.
@@ -765,7 +766,8 @@ the process of sheafification for some presheaves.
     is continuous.
 
     The sheaf $\mcF^\sharp$ is (perhaps a little confusingly) called the
-    \emph{constant sheaf with value $Y$}.
+    \emph{constant sheaf with value $Y$} and sometimes
+    denoted as $\underline{Y}$.
 \end{example}
 \section{Sheaf Cohomology}
 
@@ -773,6 +775,96 @@ In the previous section we have explored some
 fundamental properties of sheaves of sets.
 We will now be looking at sheaves of abelian groups,
 which form a very interesting and rich abelian category.
+\begin{prop}
+    Let $\mcC$ be a site. The category
+    $\Ab(\mcC)$ of abelian sheaves on $\mcC$ is abelian.
+\end{prop}
+\begin{proof}
+    Let $\mcF$ and $\mcG$ be two abelian sheaves on $\mcC$.
+    For natural transformations $\alpha, \beta \in \Hom_{\Ab(\mcC)}(\mcF, \mcG)$
+    we define $\alpha + \beta$ via
+    \begin{equation*}
+        (\alpha + \beta)_U \defeq \alpha_U + \beta_U,
+    \end{equation*}
+    where the $+$ on the right-hand side is the $+$ in $\Ab$.
+    Let us verify that $\alpha + \beta$ is a natural transformation.
+    If $f\colon U \to V$ is a morphism in $\mcC$ we have:
+    \begin{align*}
+        (\alpha + \beta)_U \circ \mcF(f)
+         & = (\alpha_U + \beta_U) \circ \mcF(f)             \\
+         & = \alpha_U \circ \mcF(f) + \beta_U \circ \mcF(f) \\
+         & = \mcG(f) \circ \alpha_V + \mcG(f) \circ \beta_V \\
+         & = \mcG(f) \circ (\alpha_V + \beta_V)             \\
+         & = \mcG(f) \circ (\alpha + \beta)_V,
+    \end{align*}
+    so that $\alpha + \beta$ is indeed an abelian category.
+    With this operation, the hom-sets become abelian groups.
+    Using \cref{lem:lims_colims_presheaves} and \cref{prop:sheafification_exact}
+    we find that $\Ab(\mcC)$ has finite limits and colimits.
+    Explicitly, limits in sheaves are the limits in presheaves
+    and colimits in sheaves are the sheafifications of the colimits in presheaves.
+    As such, we find:
+    \begin{itemize}
+        \item The zero object is given by $\underline{0}$,
+              the constant sheaf with value $0$.
+        \item The biproduct of $\mcF$ and $\mcG$ is given by
+              $(\mcF \oplus \mcG )(U) = \mcF(U) \oplus \mcG(U)$
+        \item The kernel of a map $\alpha \colon \mcF \to \mcG$ is given by
+              $\Ker(\alpha)(U) = \Ker(\alpha_U)$.
+        \item The cokernel of $\alpha \colon \mcF \to \mcG$
+              is given by the sheafification of the presheaf defined by
+              $\mcF(\alpha)(U) = \Coker(\alpha_U)$.
+    \end{itemize}
+    For $\Ab(\mcC)$ to be an abelian category, we still need to
+    show that for $\alpha \colon \mcF \to \mcG$ a morphism of sheaves,
+    $\Img(\alpha) = \Coimg(\alpha)$. In the category of abelian presheaves we have
+    \begin{equation*}
+        \Coimg(\iota(\alpha))(U) = \Coimg(\iota(\alpha)_U)
+        = \Img(\iota(\alpha)_U) = \Img(\iota(\alpha))(U),
+    \end{equation*}
+    where $\iota$ is the inclusion functor of sheaves into presheaves.
+    Since $(-)^\sharp$ is exact, we find
+    \begin{align*}
+        \Coimg(\alpha)
+         & = \Coker(\Ker(\alpha))               \\
+         & = \Coker^\sharp(\iota(\Ker(\alpha))) \\
+         & = \Coker^\sharp(\Ker(\iota(\alpha))) \\
+         & = \Coimg^\sharp(\iota(\alpha))       \\
+         & = \Img^\sharp(\iota(\alpha))         \\
+         & = \Ker^\sharp(\Coker(\iota(\alpha))) \\
+         & = \Ker(\Coker^\sharp(\iota(\alpha))) \\
+         & = \Ker(\Coker(\alpha))               \\
+         & = \Img(\alpha).
+    \end{align*}
+\end{proof}
+
+We will now restrict ourselves to the special case
+where $\mcC = \Open(X)$ for some topological space $X$.
+We follow the general ideas presented in \cite[Session 1]{Sch2020MasterClass},
+while filling out the details.
+\begin{prop}
+    Let $f \colon X \to Y$ be a continuous map. Then there is a
+    pair of adjoint functors: the pullback functor,
+    $f^* \colon Ab(X) \to Ab(Y)$, with right adjoint, the pushforward functor
+    $f_* \colon Ab(Y) \to Ab(X)$.
+\end{prop}
+\begin{proof}
+    TODO: work this out.
+\end{proof}
+\begin{lemma}
+    $\Ab(X)$ has enough injectives.
+\end{lemma}
+\begin{proof}
+    Take $x\in X$. Then $f\colon X \to \{x\}$
+    induces the pushforward functor $f_* \colon \Ab(\{x\}) \to \Ab(X)$.
+    We can identify $\Ab(\{x\})$ with $\Ab$.
+    Now if $M$ is an injective object in $\Ab$, then $f_*M$ is injective
+    in $\Ab(X)$.
+    TODO: prove this!.
+\end{proof}
+
+With this we can now do cohomology in $\Ab(X)$.
+
 \section{Condensed Sets}
 \bibliographystyle{alpha}
 \bibliography{references.bib}
