@@ -849,40 +849,38 @@ while filling out the details.
     $f_* \colon Ab(X) \to Ab(Y)$. Furthermore, $f^*$ is exact.
 \end{prop}
 \begin{proof}
-    TODO: Consistency with $U$ and $V$!!
-
     We start off by writing down what the pullback and pushforward
     functors look like.
-    Let $\mcF$ be a sheaf on $X$, and $U \in \Open(Y)$. Then,
-    $(f_*\mcF)(U) \defeq \mcF(f\inv(U))$.
+    Let $\mcF$ be a sheaf on $X$, and $V \in \Open(Y)$. Then,
+    $(f_*\mcF)(V) \defeq \mcF(f\inv(V))$.
     If $\mcG$ is a sheaf on $Y$, then
     we get a presheaf $V \mapsto \colim_{U \supseteq f(V)} \mcG(U)$,
     and $f^*\mcG$ is defined as the sheafification of this presheaf.
     There are now a lot of things to verify:
     \begin{itemize}
         \item $f_*\mcF$ is a sheaf on $Y$. Since $f$ is continuous,
-              $f\inv(U) \in \Open(X)$ for all $U\in \Open(Y)$. Furthermore,
-              if $U \subseteq U' \subseteq U''$ then
-              $f\inv(U) \subseteq f\inv(U') \subseteq f\inv(U'')$. So,
+              $f\inv(V) \in \Open(X)$ for all $V\in \Open(Y)$. Furthermore,
+              if $V \subseteq V' \subseteq V''$ then
+              $f\inv(V) \subseteq f\inv(V') \subseteq f\inv(V'')$. So,
               $f\inv$ is a functor $\Open(Y) \to \Open(X)$, and $f_*\mcF$
-              is a presheaf as composition of functors. If $\{U_i\}_{i\in I}$
-              is an open cover of $U$, then $\{f\inv(U_i)\}_{i\in I}$
-              is an open cover of $f\inv(U)$.
-              So $(f_*\mcF)(U) \to (f_*\mcF)(\{U_i\}_{i\in I})$ is a bijection
-              since $\mcF(f\inv(U)) \to \mcF(\{f\inv(U_i)\}_{i\in I})$
+              is a presheaf as composition of functors. If $\{V_i\}_{i\in I}$
+              is an open cover of $V$, then $\{f\inv(V_i)\}_{i\in I}$
+              is an open cover of $f\inv(V)$.
+              So $(f_*\mcF)(V) \to (f_*\mcF)(\{V_i\}_{i\in I})$ is a bijection
+              since $\mcF(f\inv(V)) \to \mcF(\{f\inv(V_i)\}_{i\in I})$
               is a bijection by $\mcF$ being a sheaf. Consequently,
               $f_*\mcF$ is a sheaf by \cref{lem:presheaf_of_cover}.
         \item $f^*\mcG$ is a sheaf on $X$. Since we take the sheafification,
-              we just need to verify that $G(V) = \colim_{U \supseteq f(V)} \mcG(U)$
-              defines a presheaf. First note that if $V\subseteq V'$,
-              then $\{U \supseteq f(V')\} \subseteq \{U \supseteq f(V)\}$.
-              So, $G(V)$ is also a cone for $\mcG(U)_{U \supseteq f(V')}$,
-              and there is hence a unique map $G(V') \to G(V)$,
+              we just need to verify that $G(U) = \colim_{V \supseteq f(U)} \mcG(V)$
+              defines a presheaf. First note that if $U\subseteq U'$,
+              then $\{V \supseteq f(U')\} \subseteq \{V \supseteq f(U)\}$.
+              So, $G(U)$ is also a co-cone for $\mcG(V)_{V \supseteq f(U')}$,
+              and there is hence a unique map $G(U') \to G(U)$,
               by the colimit property. The uniqueness
               of this map gives the functoriality of $G$. After all,
-              the map $G(V) \to G(V)$ must be the identity, by uniqueness,
-              and the two maps $G(V'') \to G(V') \to G(V)$, for
-              $V \subseteq V' \subseteq V''$ must also be
+              the map $G(U) \to G(U)$ must be the identity, by uniqueness,
+              and the two maps $G(U'') \to G(U') \to G(U)$, for
+              $U \subseteq U' \subseteq U''$ must also be
               equal by uniqueness.
         \item $f_*$ is a functor. For $\alpha \colon \mcF \to \mcG$,
               we define $f_*\alpha$ via $(f_*\alpha)_V = \alpha_{f\inv(V)}$.
@@ -896,7 +894,7 @@ while filling out the details.
               so we just need to check that $f_*\alpha$ is a natural
               transformation. If $V \subseteq V'$, then $f\inv(V) \subseteq f\inv(V')$,
               so naturality of $f_*\alpha$ in $V,V'$ follows from naturality
-              of $\alpha$ in $f\inv(V), f\inv(V')$
+              of $\alpha$ in $f\inv(V), f\inv(V')$.
         \item $f^*$ is a functor. Let $\alpha\colon \mcG \to \mcF$
               be a natural transformation, and $G$ and $F$ be the presheaves
               from the construction of $f^*\mcG$ and $f^*\mcF$. To define
@@ -904,58 +902,60 @@ while filling out the details.
               $U\in \Open(X)$. For each $V \supseteq f(U)$ we have a
               map $\mcF(V) \to F(U)$ which we can compose with $\alpha_V$
               to get a map $\mcG(V) \to F(U)$. Naturality of $\alpha$
-              implies that this gives a well-defined cone, and hence a
+              implies that this gives a well-defined co-cone, and hence a
               unique morphism $G(U) \to F(U)$ by the universal property
               of colimits. Uniqueness of this map gives the functoriality
               of $f^*$.
-        \item $\Hom_{\Ab(Y)}(f^*\mcG, \mcF) = \Hom_{\Ab(X)}(\mcG, f_*\mcF)$.
-              Let $\alpha \colon \mcG \to f_*\mcF$ be a morphism in $\Ab(X)$.
-              So, for each $U\in \Open(X)$ we have a map
+        \item $\Hom_{\Ab(X)}(f^*\mcG, \mcF) = \Hom_{\Ab(Y)}(\mcG, f_*\mcF)$.
+              Let $\alpha \colon \mcG \to f_*\mcF$ be a morphism in $\Ab(Y)$.
+              So, for each $V\in \Open(Y)$ we have a map
               \begin{equation*}
-                  \alpha_U \colon \mcG(U) \to \mcF(f\inv(U)).
+                  \alpha_V \colon \mcG(V) \to \mcF(f\inv(V)).
               \end{equation*}
               Now, if $V \supseteq f(U)$, then $f\inv(V) \supseteq f\inv(f(U)) \supseteq U$.
               So we get a map
               \begin{equation*}
-                  \beta_V^U \defeq \alpha_U|_V \colon \mcG(U) \to\mcF(f\inv(U))\to \mcF(V),
+                  \beta_U^V \defeq \alpha_V|_U \colon \mcG(V) \to\mcF(f\inv(V))\to \mcF(U),
               \end{equation*}
-              for each $U \supseteq f(V)$. In order for $(\mcF(V), \beta_V^U)$ to
+              for each $V \supseteq f(U)$. In order for $(\mcF(U), \beta_U^V)$ to
               form a co-cone we need that
               \begin{equation*}
                   \begin{tikzcd}[column sep=small, cramped]
-                      &\mcF(V)\\
-                      \mcF(f\inv(U)) \ar[rr, "|_{f\inv(U')}"] \ar[ru, "|_V"]
-                      & & \mcF(f\inv(U')) \ar[lu, "|_V"'] \\
-                      \mcG(U) \ar[rr, "|_{U'}"] \ar[u, "\alpha_U"] & &
-                      \mcG(U') \ar[u, "\alpha_{U'}"']
+                      &\mcF(U)\\
+                      \mcF(f\inv(V)) \ar[rr, "|_{f\inv(V')}"] \ar[ru, "|_U"]
+                      & & \mcF(f\inv(V')) \ar[lu, "|_U"'] \\
+                      \mcG(V) \ar[rr, "|_{V'}"] \ar[u, "\alpha_V"] & &
+                      \mcG(V') \ar[u, "\alpha_{V'}"']
                   \end{tikzcd}
                   ,
               \end{equation*}
-              commutes for $U \supseteq U' \supseteq f(V)$.
+              commutes for $V \supseteq V' \supseteq f(U)$.
               The top triangle commutes by functoriality of $\mcF$,
               while the bottom square commutes by naturality of $\alpha$.
               The universal property of the colimit gives a unique map
               \begin{equation*}
-                  \tilde{\beta}_V \colon \colim_{U \supseteq f(V)} \mcG(U) \to \mcF(V),
+                  \tilde{\beta}_U \colon \colim_{V \supseteq f(U)} \mcG(V) \to \mcF(U),
               \end{equation*}
               making the co-cone diagrams commute.
               We now need to verify that this gives a map of presheaves
-              $\tilde{\beta} \colon G = \iota(f^*\mcG) \to \mcF$. Since
+              $\tilde{\beta} \colon G \to \mcF$,
+              where $G$ is the presheaf in the construction
+              of $f^*\mcG$. Since
               \begin{equation*}
                   \begin{tikzcd}[sep=small]
-                      G(V)\dar \rar["\tilde{\beta}_V"] & \mcF(V) \dar\\
-                      G(V') \rar["\tilde{\beta}_{V'}"] & \mcF(V')
+                      G(U)\dar \rar["\tilde{\beta}_U"] & \mcF(U) \dar\\
+                      G(U') \rar["\tilde{\beta}_{U'}"] & \mcF(U')
                   \end{tikzcd}
                   \iff
                   \begin{tikzcd}[sep=small]
-                      \mcG(U) \rar["\alpha_U"] \dar
-                      & \mcF(f\inv(U)) \rar \dar
-                      & \mcF(V) \dar \\
-                      \mcG(U) \rar["\alpha_{U'}"]
-                      & \mcF(f\inv(U)) \rar
-                      & \mcF(V)
+                      \mcG(V) \rar["\alpha_V"] \dar
+                      & \mcF(f\inv(V)) \rar \dar
+                      & \mcF(U) \dar \\
+                      \mcG(V) \rar["\alpha_{V'}"]
+                      & \mcF(f\inv(V)) \rar
+                      & \mcF(U)
                   \end{tikzcd}
-                  , \forall U \supseteq f(V), U' \supseteq f(V'),
+                  , \forall V \supseteq f(U), V' \supseteq f(U'),
               \end{equation*}
               this is indeed the case. After all, the right-hand side
               commutes by naturality of $\alpha$ and functoriality of $\mcF$.
@@ -964,27 +964,27 @@ while filling out the details.
 
               Conversely, given $\beta \colon f^*\mcG \to \mcF$, we have maps
               \begin{equation*}
-                  \beta_V^U \colon \mcG(U) \to \mcG(V)
+                  \beta_U^V \colon \mcG(V) \to \mcF(U)
               \end{equation*}
               for every $U \in \Open(X)$ and $V \supseteq f(U)$.
-              Since $U \supseteq f(f\inv(U))$, we can define
+              Since $V \supseteq f(f\inv(V))$, we can define
               \begin{equation*}
-                  \alpha_U \defeq \beta_{f\inv(U)}^U \colon \mcG(U) \to \mcF(f\inv(U)).
+                  \alpha_V \defeq \beta_{f\inv(V)}^V \colon \mcG(V) \to \mcF(f\inv(V)).
               \end{equation*}
               By naturality of $\beta$,
               \begin{equation*}
                   \begin{tikzcd}[cramped]
-                      f^*\mcG(f\inv(U)) \dar["\beta_{f\inv(U)}"'] \rar
-                      & f^*\mcG(f\inv(U')) \dar["\beta_{f\inv(U')}"]\\
-                      \mcF(f\inv(U))  \rar & \mcF(f\inv(U'))
+                      f^*\mcG(f\inv(V)) \dar["\beta_{f\inv(V)}"'] \rar
+                      & f^*\mcG(f\inv(V')) \dar["\beta_{f\inv(V')}"]\\
+                      \mcF(f\inv(V))  \rar & \mcF(f\inv(V'))
                   \end{tikzcd}
               \end{equation*}
               commutes, and hence in particular we get
               \begin{equation*}
                   \begin{tikzcd}[cramped]
-                      \mcG(U) \dar["\beta^{U}_{f\inv(U)}"'] \rar
-                      & \mcG(U') \dar["\beta^{U'}_{f\inv(U')}"]\\
-                      \mcF(f\inv(U))  \rar & \mcF(f\inv(U'))
+                      \mcG(V) \dar["\beta^{V}_{f\inv(V)}"'] \rar
+                      & \mcG(V') \dar["\beta^{V'}_{f\inv(V')}"]\\
+                      \mcF(f\inv(V))  \rar & \mcF(f\inv(V'))
                   \end{tikzcd}
               \end{equation*}
               which shows the naturality of $\alpha$.
@@ -994,20 +994,19 @@ while filling out the details.
               we obtain $\beta \colon f^*\mcG \to \mcF$.
               Let $\gamma\colon \mcG \to f_* \mcF$ be the map we obtain
               from $\beta$. We want to show that $\gamma = \alpha$.
-              Take $U \in \Open(X)$, then
+              Take $V \in \Open(X)$, then
               \begin{equation*}
-                  \gamma_U = \beta_{f\inv(U)}^U = \alpha_U|_{f\inv(U)} = \alpha_U,
+                  \gamma_V = \beta_{f\inv(V)}^V = \alpha_V|_{f\inv(V)} = \alpha_V,
               \end{equation*}
               as desired. Conversely, given $\beta \colon f^*\mcG \to \mcF$,
               we obtain $\alpha \colon \mcG \to f_* \mcF$ from $\beta$, and
               $\eta \colon f^*\mcG \to \mcF$ from $\alpha$. We have,
               \begin{equation*}
-                  \eta_V^U = \alpha_U |V = \beta_{f\inv(U)}^U | V,
+                  \eta_U^V = \alpha_V |_U = \beta_{f\inv(V)}^V |_U,
               \end{equation*}
-              for $U \supseteq f(V)$. Since $V \subseteq f\inv(U)$,
-              naturality of $\beta$ gives $\beta_{f\inv(U)}^U |V = \beta_V^U$,
-              so $\eta_V^U = \beta_V^U$.
-
+              for $V \supseteq f(U)$. Since $U \subseteq f\inv(V)$,
+              naturality of $\beta$ gives $\beta_{f\inv(V)}^V |_U = \beta_U^V$,
+              so $\eta_U^V = \beta_U^V$.
         \item $f^*$ is exact.
     \end{itemize}
 \end{proof}
