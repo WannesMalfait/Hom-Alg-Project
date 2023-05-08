@@ -1007,22 +1007,76 @@ while filling out the details.
               for $V \supseteq f(U)$. Since $U \subseteq f\inv(V)$,
               naturality of $\beta$ gives $\beta_{f\inv(V)}^V |_U = \beta_U^V$,
               so $\eta_U^V = \beta_U^V$.
-        \item $f^*$ is exact.
+
+              TODO: naturality in $\mcF$ and $\mcG$.
+        \item $f^*$ is exact. Since it is a left adjoint, it is right-exact.
+              We still need to show that it is left-exact, i.e. $f^*$ preserves
+              monomorphisms. Let $\alpha\colon \mcF \to \mcG$ be a monomorphism.
+              Since $\Ker(\alpha)(V) = \Ker(\alpha_V)$ we have that $\alpha$
+              is mono if and only if all the $\alpha_V$ are mono. Since
+              colimits over filtered diagrams commute with finite limits,
+              it follows that $F(U) \to G(U)$ is a mono if and only
+              if all the $\alpha_V$ for $V \supseteq f(U)$ are mono.
+              Consequently, $f^*\alpha$ is a mono if $\alpha$ is a mono.
     \end{itemize}
 \end{proof}
+This result allows us to prove the crucial property
+needed to be able to do cohomology in $\Ab(X)$.
 \begin{lemma}
     $\Ab(X)$ has enough injectives.
 \end{lemma}
 \begin{proof}
-    Take $x\in X$. Then $f\colon X \to \{x\}$
-    induces the pushforward functor $f_* \colon \Ab(\{x\}) \to \Ab(X)$.
-    We can identify $\Ab(\{x\})$ with $\Ab$.
-    Now if $M$ is an injective object in $\Ab$, then $f_*M$ is injective
-    in $\Ab(X)$.
-    TODO: prove this!.
+    Take $x\in X$. Then $i_{x}\colon \{x\} \injto X$ is
+    a continuous map and hence induces
+    the pushforward functor $i_{x,*} \colon \Ab(\{x\}) \to \Ab(X)$.
+    Note that $\Ab(\{x\})$ is equivalent to $\Ab$ as category,
+    since a sheaf on one point is completely determined
+    by the value at that point.
+    Now if $M$ is an injective object in $\Ab$, we claim that $i_{x,*}M$ is injective
+    in $\Ab(X)$. Let $\alpha \colon \mcF \to \mcG$ be a monomorphism and
+    $\beta\colon \mcF \to i_{x, *}M$ any morphism of sheaves. We need to
+    find a map $\gamma \colon \mcG \to i_{x, *}M$ such that $\beta = \gamma\circ \alpha$.
+    Since $i_x^*$ is a left adjoint to $i_{x, *}$ we get a map
+    $b \colon i_x^*(\mcF) \to M$. Since $i_x^*$ is exact, the map
+    $a \colon i_x^*\mcF \to i_x^*\mcG$ is still a monomorphism. So,
+    since $M$ is injective, there is a map $g\colon i_x^*\mcG \to M$
+    such that $b = g\circ a$. This gives a map $\gamma \colon \mcG \to i_{x, *}M$,
+    and $\gamma \circ \alpha$ is the same as the induced map by $g\circ a = b$
+    since an adjunction is natural in both arguments.
+    Thus, $\gamma \circ \alpha = \beta$ as desired.
+
+    What remains to show is that for every sheaf $\mcF$, there is a monomorphism
+    $\mcF \injto i_{x, *}M$, for some $x\in X$ and injective $M\in \Ab$.
+    Since $\Ab$ has enough injectives, there is a monomorphism $a_x\colon i_x^*\mcF \to M_x$,
+    for every sheaf $\mcF$. The adjunction gives a map $\alpha_x\colon \mcF \to i_{x,*}M_x$.
+    The problem is that this map need not be a monomorphism,
+    since $(i_{x, *}M)(U) = M(i_x\inv(U)) = \{*\}$ if $x\notin U$.
+    Since the product of injectives is again injective, we can solve this
+    problem by considering the map
+    \begin{equation*}
+        \alpha = (\alpha_x)_{x\in X} \colon \mcF \to \prod\limits_{x\in X}i_{x,*}M,
+    \end{equation*}
+    instead. Take $V \in \Open(X)$. If $V = \emptyset$, then $\mcF(V) = \{*\}$
+    and $\alpha_V$ is a monomorphism. Otherwise, take $x\in V$. We claim
+    that $(\alpha_x)_V \colon \mcF(V) \to M_x$ is a monomorphism. By definition,
+    $(\alpha_x)_V$ is given by the composition of $\mcF(V) \to i_x^*\mcF(V)$
+    and $i_x^*\mcF(V) \to M_x$. Since filtered diagrams commute with
+    finite limits, we have that $(\alpha_x)_V$ is indeed a monomorphism.
+    So, if $x,y\in V$ with $\alpha_V(x) = \alpha_V(y)$, then $x=y$,
+    which shows that $\alpha$ is a monomorphism.
 \end{proof}
 
+In the previous proof we considered the inclusion map.
+If we instead consider the projection map $f\colon X \to \{*\}$,
+then the pullback $f^*$ becomes the map $\Ab \to \Ab(X)$,
+which sends an abelian group $M$ to the constant sheaf with
+value $M$. The pushforward $f_*\colon \Ab(X) \to Ab$ maps
+a sheaf, $\mcF$, to its global sections, $\mcF(X)$.
+
 With this we can now do cohomology in $\Ab(X)$.
+Let $f\colon X \to Y$ be a continuous function.
+Since $f_*$ is a right adjoint, it is left-exact and hence,
+we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
 
 \section{Condensed Sets}
 \bibliographystyle{alpha}
