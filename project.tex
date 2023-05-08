@@ -884,34 +884,30 @@ while filling out the details.
               and the two maps $G(V'') \to G(V') \to G(V)$, for
               $V \subseteq V' \subseteq V''$ must also be
               equal by uniqueness.
-        \item $f_*$ is a functor. For
-              \begin{tikzcd}[cramped, sep=small]
-                  X \rar["f"] & Y \rar["g"] & Z
-              \end{tikzcd} we have
+        \item $f_*$ is a functor. For $\alpha \colon \mcF \to \mcG$,
+              we define $f_*\alpha$ via $(f_*\alpha)_V = \alpha_{f\inv(V)}$.
+              Then,
               \begin{equation*}
-                  ((g\circ f)_* \mcF)(U) = \mcF(f\inv g\inv(U))
-                  = (g_*\mcF)(f\inv(U)) =(g_*(f_*\mcF))(U).
+                  (f_*\beta \circ f_* \alpha)_V
+                  = \beta_{f\inv(V)} \circ \alpha_{f\inv(V)}
+                  = (\beta \circ \alpha)_{f\inv(V)}
+                  = (f_*(\beta\circ \alpha))_V,
               \end{equation*}
-        \item $f^*$ is a functor. We need to verify that
-              \begin{equation}
-                  \label{eq:colim_pullback}
-                  \colim_{U\supseteq g(f(W))}\mcF(U)
-                  = \colim_{V \supseteq f(W)} \colim_{U \supseteq g(V)} \mcF(U)
-              \end{equation}
-              for
-              \begin{tikzcd}[cramped, sep=small]
-                  X \rar["f"] & Y \rar["g"] & Z.
-              \end{tikzcd}
-              Let $(M, \lambda_U)$ be a cone on $\mcF(U)_{U \supseteq g(f(W))}$.
-              This gives a cone $(M, \lambda_U)$ on $\mcF(U)_{V \supseteq g(V)}$
-              for each $V \supseteq f(W)$, and hence a unique map $\rho_V$ from $M$
-              into $\colim_{U \supseteq g(V)} \mcF(U)$. As such we obtain a
-              cone $(M, \rho_V)$, which gives us a unique map
-              \begin{equation*}
-                  M \to \colim_{V \supseteq f(W)} \colim_{U \supseteq g(V)} \mcF(U),
-              \end{equation*}
-              making the cone diagrams commute. The uniqueness of colimits
-              now implies \cref{eq:colim_pullback}.
+              so we just need to check that $f_*\alpha$ is a natural
+              transformation. If $V \subseteq V'$, then $f\inv(V) \subseteq f\inv(V')$,
+              so naturality of $f_*\alpha$ in $V,V'$ follows from naturality
+              of $\alpha$ in $f\inv(V), f\inv(V')$
+        \item $f^*$ is a functor. Let $\alpha\colon \mcG \to \mcF$
+              be a natural transformation, and $G$ and $F$ be the presheaves
+              from the construction of $f^*\mcG$ and $f^*\mcF$. To define
+              $f^*\alpha$ we need to give a map $G(U) \to F(U)$ for each
+              $U\in \Open(X)$. For each $V \supseteq f(U)$ we have a
+              map $\mcF(V) \to F(U)$ which we can compose with $\alpha_V$
+              to get a map $\mcG(V) \to F(U)$. Naturality of $\alpha$
+              implies that this gives a well-defined cone, and hence a
+              unique morphism $G(U) \to F(U)$ by the universal property
+              of colimits. Uniqueness of this map gives the functoriality
+              of $f^*$.
         \item $\Hom_{\Ab(Y)}(f^*\mcG, \mcF) = \Hom_{\Ab(X)}(\mcG, f_*\mcF)$.
               Let $\alpha \colon \mcG \to f_*\mcF$ be a morphism in $\Ab(X)$.
               So, for each $U\in \Open(X)$ we have a map
