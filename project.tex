@@ -270,7 +270,13 @@ to this site.
     of all $G$-sets, i.e. sets with a corresponding action
     by the group $G$. Morphisms are given by maps $f \colon X \to Y$
     satisfying $g\cdot f(x) = f(g\cdot x)$, i.e. $G$-equivariant
-    maps. To make this into a site, we define the covers to be the
+    maps. To make this into a site\footnote{
+        Technically, this is not a site, since the category
+        of all $G$-sets is a proper class. The example is
+        simply meant to illustrate what covers could look like.
+        There is a way around this problem though. See
+        \cite[\href{https://stacks.math.columbia.edu/tag/00VK}{Example 00VK}]{stacks-project}.
+    }, we define the covers to be the
     families of jointly surjective maps. In other words
     $\{f_i \colon X_i \to X\}_{i\in I}$ is a cover if
     $\bigcup_{i\in I}f_i(X_i) = X$. Let us verify the axioms:
@@ -847,6 +853,7 @@ a more abstract approach like in
          & = \Img(\alpha).
     \end{align*}
 \end{proof}
+TODO: example where Coker really needs the sheafification.
 
 We will now restrict ourselves to the special case
 where $\mcC = \Open(X)$ for some topological space $X$.
@@ -1019,8 +1026,8 @@ while filling out the details.
               so $\eta_U^V = \beta_U^V$.
 
               TODO: naturality in $\mcF$ and $\mcG$.
-        \item $f^*$ is exact. Since it is a left adjoint, it is right-exact.
-              We still need to show that it is left-exact, i.e. $f^*$ preserves
+        \item $f^*$ is exact. Since it is a left adjoint, it is right exact.
+              We still need to show that it is left exact, i.e. $f^*$ preserves
               monomorphisms. Let $\alpha\colon \mcF \to \mcG$ be a monomorphism.
               Since $\Ker(\alpha)(V) = \Ker(\alpha_V)$ we have that $\alpha$
               is mono if and only if all the $\alpha_V$ are mono. Since
@@ -1086,10 +1093,16 @@ a sheaf, $\mcF$, to its global sections, $\mcF(X)$.
 
 With this we can now do cohomology in $\Ab(X)$.
 Let $f\colon X \to Y$ be a continuous function.
-Since $f_*$ is a right adjoint, it is left-exact, and
+Since $f_*$ is a right adjoint, it is left exact, and
 we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
 
+TODO: example about sheaf cohomology.
 \section{Condensed Sets}
+
+\subsection{Defining a Condensed Set}
+
+\subsection{Condensed Cohomology}
+
 \bibliographystyle{alpha}
 \bibliography{references.bib}
 \end{document}
