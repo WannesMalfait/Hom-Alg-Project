@@ -215,7 +215,7 @@ The idea of a site was first introduced by
 Alexander Grothendieck, and has proven to be
 very useful in algebraic geometry.
 For this subsection we largely follow
-\cite[Part 1, Chapter 7]{stacks-project}.
+\cite[\href{https://stacks.math.columbia.edu/tag/00UZ}{Tag 00UZ}]{stacks-project}.
 
 \subsubsection{Coverings and Sites}
 
@@ -229,7 +229,7 @@ properties that coverings of topological spaces have:
         over all coverings. It is possible to let $\Cov(\mcC)$ be a class,
         and then show that it can be replaced with a set of coverings
         that gives rise to the same category of sheaves.
-        See \cite[Remark 7.6.3]{stacks-project}.}
+        See \cite[\href{https://stacks.math.columbia.edu/tag/00VI}{Tag 00VI}]{stacks-project}.}
     \begin{enumerate}
         \item If $V \to U$ is an isomorphism, then $\{V \to U\}\in \Cov(\mcC)$.
         \item If $\{U_i \to U\}_{i\in I}$ is a covering, and for each $i\in I$,
@@ -382,6 +382,9 @@ We first have a few lemmas regarding limits of presheaves and sheaves.
     commutes with all limits and colimits.
 \end{lemma}
 \begin{proof}
+    We only prove the case of limits. The colimit case is
+    analogous.
+
     Let $\mcF \colon \mcI \to \PSh(\mcC)$ be a diagram.
     We get a cone $(\mcF_{\lim}, p^i)$ by
     moving to the images in $\Set$. In other words we take
@@ -569,7 +572,8 @@ For two coverings $\mcU, \mcU'$ of $U \in \mcC$,
 we have a common refinement $\{U_i \times_U U'_j \to U\}_{i\in I, j\in J}$
 which exists by the second and third axioms.
 Furthermore, one can show that if $f,g\colon \mcU \to \mcV$
-are refinements, then $\mcF(f) = \mcF(g)$ (\cite[Lemma 7.10.6]{stacks-project}).
+are refinements, then $\mcF(f) = \mcF(g)$
+(\cite[\href{https://stacks.math.columbia.edu/tag/00W7}{Tag 00W7}]{stacks-project}).
 This gives that $\Cov(U)^{\opp} \to \Set$ is a filtered
 diagram. So
 \begin{equation*}
@@ -775,6 +779,12 @@ In the previous section we have explored some
 fundamental properties of sheaves of sets.
 We will now be looking at sheaves of abelian groups,
 which form a very interesting and rich abelian category.
+The previous section only proved results for sheaves of
+sets, but these results still hold for sheaves of abelian
+groups. This can be shown by either verifying that all
+the proofs still hold in the abelian case, or through
+a more abstract approach like in
+\cite[\href{https://stacks.math.columbia.edu/tag/00YR}{Section 00YR}]{stacks-project}
 \begin{prop}
     Let $\mcC$ be a site. The category
     $\Ab(\mcC)$ of abelian sheaves on $\mcC$ is abelian.
@@ -1064,6 +1074,7 @@ needed to be able to do cohomology in $\Ab(X)$.
     finite limits, we have that $(\alpha_x)_V$ is indeed a monomorphism.
     So, if $x,y\in V$ with $\alpha_V(x) = \alpha_V(y)$, then $x=y$,
     which shows that $\alpha$ is a monomorphism.
+    TODO: Make this proof clearer.
 \end{proof}
 
 In the previous proof we considered the inclusion map.
@@ -1075,7 +1086,7 @@ a sheaf, $\mcF$, to its global sections, $\mcF(X)$.
 
 With this we can now do cohomology in $\Ab(X)$.
 Let $f\colon X \to Y$ be a continuous function.
-Since $f_*$ is a right adjoint, it is left-exact and hence,
+Since $f_*$ is a right adjoint, it is left-exact, and
 we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
 
 \section{Condensed Sets}
