@@ -11,6 +11,7 @@
 \DeclareMathOperator{\Cont}{Cont}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\id}{id}
 
 \title{A Fluid Introduction to Condensed Mathematics}
 \author{Wannes Malfait}
@@ -38,7 +39,7 @@ of category. As such, we will dive into sheaf cohomology and some
 applications of it in algebraic topology. But first, we must
 define what a sheaf is.
 
-\subsection{On Topological Spaces}
+\subsection{On topological spaces}
 Consider the following situation in algebraic geometry.
 We have some (affine) algebraic variety $X$, with the Zariski Topology.
 Associated to $X$ is an ideal $I$ of all the polynomials that vanish
@@ -209,7 +210,7 @@ As it turns out, it is possible to generalize
 the definition of sheaves to categories which
 also have the notion of a covering. We will
 need this notion when discussing condensed sets.
-\subsection{On a Site}
+\subsection{On a site}
 
 The idea of a site was first introduced by
 Alexander Grothendieck, and has proven to be
@@ -217,7 +218,7 @@ very useful in algebraic geometry.
 For this subsection we largely follow
 \cite[\href{https://stacks.math.columbia.edu/tag/00UZ}{Tag 00UZ}]{stacks-project}.
 
-\subsubsection{Coverings and Sites}
+\subsubsection{Coverings and sites}
 
 To define a site, we collect all the essential
 properties that coverings of topological spaces have:
@@ -285,8 +286,8 @@ to this site.
               in particular it is surjective, so $\{f \colon X \to Y\}$ is a cover
               of $Y$
         \item If $\{f_i \colon X_i \to Y\}_{i\in I}$ is jointly surjective, and
-              for each $i\in I$ the family $\{f_{ij} \colon X_{ij} \to X_j\}_{j\in J}$ is jointly
-              surjective, then so is $\{f_i \circ f_{ij}\colon X_{ij} \to Y\}_{i\in I, j\in J}$.
+              for each $i\in I$ the family $\{f_{ij} \colon X_{ij} \to X_i\}_{j\in J_i}$ is jointly
+              surjective, then so is $\{f_i \circ f_{ij}\colon X_{ij} \to Y\}_{i\in I, j\in J_i}$.
         \item Let $\{f_i \colon X_i \to Y\}_{i\in I}$ be a cover,
               and $f\colon T \to Y$ a $G$-equivariant map. We claim that the pullback
               $X_i \times_Y T$ exists and is given by
@@ -779,7 +780,7 @@ the process of sheafification for some presheaves.
     \emph{constant sheaf with value $Y$} and sometimes
     denoted as $\underline{Y}$.
 \end{example}
-\section{Sheaf Cohomology}
+\section{Sheaf cohomology}
 
 In the previous section we have explored some
 fundamental properties of sheaves of sets.
@@ -1097,12 +1098,173 @@ Since $f_*$ is a right adjoint, it is left exact, and
 we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
 
 TODO: example about sheaf cohomology.
-\section{Condensed Sets}
+\section{Condensed sets}
 
-\subsection{Defining a Condensed Set}
+We now have all the necessary material to be able to say a little
+about condensed sets. Intuitively, a condensed set
+is a generalization of a topological space, which contains
+more information about how it interacts with other spaces.
+The goal of this section is two-fold:
+\begin{itemize}
+    \item We want to define what a condensed set is,
+          and compute some examples.
+    \item We want to define cohomology in the condensed
+          setting and compare it to other types of cohomology.
+\end{itemize}
+\subsection{What is a condensed set?}
+As it turns out, the definition of a condensed set is not so
+straightforward. As is the case in representation theory,
+it is often useful to study an object by considering
+representations of the object as simpler objects. In
+this case we will study topological spaces by considering
+maps from profinite sets into topological spaces.
+\begin{definition}[Profinite set]
+    A profinite set is a compact, Hausdorff, totally disconnected space.
+    Explicitly, it is a topological space $X$, such that
+    \begin{itemize}
+        \item Every open cover of $X$ has a finite subcover.
+        \item For every two different points, $x\neq y \in X$, there
+              exist neighborhoods $U$ and $V$ of $x$ and $y$ such that $U\cap V = \emptyset$.
+        \item The connected components of $X$ are the singletons.
+    \end{itemize}
+\end{definition}
+For example, a finite space with the discrete topology is a profinite set.
+We would now like to turn the category of profinite sets into
+a site. There is a small problem though. Namely, the category
+of profinite sets isn't small. To solve this, we
+take an uncountable strong limit cardinal $\kappa$
+and only consider the profinite sets with cardinality
+less than $\kappa$. Recall that a strong limit
+cardinal is a cardinal $\kappa$ such that
+$2^\lambda < \kappa$ for all cardinals $\lambda < \kappa$.
 
-\subsection{Condensed Cohomology}
+What are the coverings on this category? A covering
+is given by a finite family of jointly surjective
+maps, thus a set of maps $\{f_i \colon X_i \to X\}_{i=0}^n$
+such that $X = \bigcup_{i=0}^n f_i(X_i) = X$.
+This collection of coverings does indeed satisfy the needed axioms:
+\begin{enumerate}
+    \item If $f\colon Y \to X$ is an isomorphism, then $f$ is surjective,
+          so $\{f\}$ is a cover.
+    \item If $\{f_i \colon X_i \to Y\}_{i=0}^n$ is jointly surjective, and
+          for each $i \in \{0, \dots, n\}$, the set $\{f_{ij}\colon X_{ij} \to X_i \}_{j=0}^{n_i}$
+          is jointly surjective, then so is the composition
+          $\{f_i \circ f_{ij}\colon X_{ij} \to Y\}_{i,j=0}^{n, n_i}$.
+    \item Finally, let $\{f_i \colon X_i \to Y\}_{i= 0}^n$ be a cover, and
+          $f\colon S \to Y$ a morphism. Then, assuming that the pullback
+          $X_i \times_Y S$ is a profinite set, we have that the
+          projection maps $\{X_i \times_Y S \to S\}_{i=0}^n$ are jointly surjective.
+          After all, for $s\in S$, the image $f(s)$ is equal to $f_i(x_i)$ for some
+          $i \in \{0, \dots, n\}$ since the $f_i$ are jointly surjective.
+          So, $s$ is the image of $(x_i, s) \in X_i \times_Y S$.
+\end{enumerate}
 
+The only thing left to show is that the pullback of two profinite
+sets is again a profinite set. In fact, something stronger
+is true:
+\begin{prop}
+    \label{prop:limit_profinite}
+    A limit of profinite spaces is again a profinite space.
+\end{prop}
+\begin{proof}
+    Let $X = \lim_{i \in \mcI} X_i$ be the limit as topological spaces.
+    We first show that $X$ is still Hausdorff and totally disconnected.
+    Take $x\neq y \in X$. Then for at least one of the projections
+    $f_i \colon X \to X_i$ we must have $f_i(x) \neq f_i(y)$. Since
+    $X_i$ is Hausdorff, we can find open neighborhoods $U$ of
+    $f_i(x)$ and $V$ of $f_i(y)$ such that $U\cap V = \emptyset$.
+    But then $f_i\inv(U) \cap f_i\inv(V) = \emptyset$, and
+    $x \in f_i\inv(U), y \in f_i\inv(V)$. Since $X_i$ is totally
+    disconnected, $f_i(x)$ and $f_i(y)$ are in separate components.
+    Since the continuous image of a connected set is connected,
+    we must have that $x$ and $y$ are in separate
+    connected components as well.
+    Finally, one can also show that limits of compact Hausdorff
+    spaces are again compact (see
+    \cite[\href{https://stacks.math.columbia.edu/tag/08ZV}{Lemma 08ZV}]{stacks-project}).
+    Essentially the argument is as follows:
+    \begin{itemize}
+        \item Limits are made out of products and equalizers.
+        \item Products of compact spaces are compact.
+        \item By above, limits of Hausdorff spaces are Hausdorff.
+        \item Equalizers of functions into Hausdorff spaces are closed.
+        \item So the limit is compact as a closed subspace of a compact space.
+    \end{itemize}
+\end{proof}
+With this we arrive at the following definition:
+\begin{definition}[$\kappa$-condensed sets]
+    The category of $\kappa$-condensed sets is the
+    category of sheaves on the site of $\kappa$-small
+    profinite sets, with coverings given by
+    jointly surjective maps.
+\end{definition}
+Analogously, we can define condensed abelian groups, rings, vector spaces\dots.
+As we have seen, the category of abelian sheaves on a site is abelian.
+This is not true for the category of topological abelian groups. After all,
+in any abelian group, a morphism that is both an epimorphism and a
+monomorphism is automatically an isomorphism. The map
+\begin{equation*}
+    \id\colon (\bbR, \mcT_{\text{discrete}}) \to (\bbR, \mcT_{\text{Euclidean}}),
+\end{equation*}
+is bijective as sets, and hence an epimorphism and a monomorphism. However,
+since the two topologies don't coincide, the map is not an isomorphism.
+
+How is this issue resolved in the condensed setting?
+With a topological space $X$, we can associate a
+condensed set $\underline{X} = \Cont(-, X)$. The
+``underlying set'' can then be found as $\underline{X}(\{*\})$.
+The point is that the map
+$f\colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidian}}}$
+is no longer an epimorphism. As we will see later on, the cokernel
+of this map can be computed ``section-wise'', i.e. $\Coker(f)(U) = \Coker(f_U)$.
+So, to show that the cokernel is not trivial, we need to show that
+there is some profinite set $S$ with
+$\Cont(S, \bbR_{\text{discrete}}) \subsetneq \Cont(S,\bbR_{\text{Euclidean}})$.
+Consider the Cantor set $S$, which is homeomorphic to $\prod_{n\in \bbN}\{0,1\}$
+where $\{0,1\}$ has the discrete topology. By \cref{prop:limit_profinite}, the
+Cantor set is a profinite set. It can alternatively be described as the
+closed subspace of the real numbers (with the Euclidean topology), given by
+\begin{equation*}
+    S = [0,1]\setminus \bigcup_{n=0}^\infty \bigcup_{k=0}^{3^n-1}
+    \left(\frac{3k+1}{3^{n+1}},\frac{3k+2}{3^{n+1}}\right).
+\end{equation*}
+With this description, we get a continuous map from $S$ into the real numbers
+with the Euclidean topology, namely the inclusion map. On the other hand,
+this map is not continuous when $\bbR$ is equipped with the discrete topology.
+If it were, then every singleton in $S$ would have to be open, as the inverse
+image of an open set. Since $S$ doesn't have the discrete topology, this is
+not the case. Consequently, the map $f_S$ is not an epimorphism.
+
+\medskip
+Recall from \cref{lem:lims_colims_presheaves} that limits and colimits
+of presheaves can be taken section-wise. For sheaves, the colimit is
+not always a sheaf, and we may need to take the sheafification of the
+colimit as presheaves to obtain a sheaf. For the category of
+$\kappa$-condensed sets, this is no longer necessary. To
+prove this, we'll need an alternative description of condensed sets.
+\begin{definition}
+    An \emph{extremally disconnected} set is a projective object
+    in the category of compact Hausdorff spaces\footnote{
+        The usual definition is that the closure of
+        every open set must again be open. In this case,
+        the two definitions are equivalent
+        (\cite[Theorem 2.5]{Gle1958ProjectiveTS})}.
+\end{definition}
+
+One can show that every compact Hausdorff space is the
+surjective image of an extremally disconnected set,
+i.e. the category has enough projectives
+(\cite[Theorem 3.2]{Gle1958ProjectiveTS}).
+TODO:
+- Show that category of $\kappa$-condensed equivalent to extremally disconnected version.
+- Show that limits and colimits can be taken section-wise.
+
+
+
+\subsection{Condensed cohomology}
+
+
+\nocite{Apa2021condensed}
 \bibliographystyle{alpha}
 \bibliography{references.bib}
 \end{document}
