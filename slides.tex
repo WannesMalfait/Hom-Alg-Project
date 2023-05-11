@@ -1,0 +1,208 @@
+\documentclass{beamer}
+
+\usetheme[coloredtitles, coloredblocks]{vub}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+% \usepackage[shortlabels]{enumitem}
+% \usepackage{hyperref}
+% \usepackage{cleveref}
+\usepackage{tikz-cd}
+
+% \input{definitions/preamble}
+\input{definitions/macros}
+\input{definitions/letterfonts}
+
+\newtheorem{proposition}{Proposition}
+
+% \usepackage[width=400pt]{geometry}
+
+\DeclareMathOperator{\Open}{\mathbf{Open}}
+\DeclareMathOperator{\opp}{opp}
+\DeclareMathOperator{\Cont}{Cont}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\id}{id}
+
+\title{A Fluid Introduction to Condensed Mathematics}
+\author{Wannes Malfait}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+    \frametitle{Motivation}
+
+    \textbf{Problem}: Algebra and topology clash:
+    \begin{equation*}
+        \id \colon \bbR_{\text{discrete}} \to \bbR_{\text{Euclidean}}
+    \end{equation*}
+    is epi + mono, but not iso
+
+    \medskip
+    Solution?
+    \pause
+
+    $\leadsto$ Condensed abelian groups
+\end{frame}
+
+\begin{frame}
+    \frametitle{Presheaves}
+
+    \textbf{Idea}: Study better behaved objects.
+    \pause
+
+    \begin{definition}
+        A \emph{presheaf} on a topological space $X$
+        is a functor
+        \begin{equation*}
+            \mcF \colon \Open(X)^{\opp} \to \Set / \Rng / \Ab / \dots
+        \end{equation*}
+    \end{definition}
+    Notation:
+    \begin{itemize}
+        \item Elements of $\mcF(U)$ are called \emph{sections}
+        \item If $ i \colon U\injto V$ then $\mcF(i)$ is
+              called the \emph{restriction} map
+        \item $s\in \mcF(V) \mapsto s|_U \in \mcF(U)$.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sheaves}
+
+    \begin{example}
+        We always have the presheaf given by
+        \begin{itemize}
+            \item $\mcF(U) \mapsto Y$, and
+            \item $\mcF(f) \mapsto \id_Y$
+        \end{itemize}
+    \end{example}
+    \pause
+    Problem:
+    \begin{itemize}
+        \item Want more structure
+        \item Want global things to be defined locally
+    \end{itemize}
+    $\leadsto$ sheaf conditions:
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sheaf conditions}
+
+    For an open cover $\{U_i\}_{i\in I}$ of $U$:
+    \begin{itemize}
+        \item \emph{uniqueness/locality}: If $s,t\in \mcF(U)$ are sections such that
+              $s|_{U_i} = t|_{U_i}$ for all $i\in I$, then $s=t$.
+              \pause
+        \item \emph{gluing}: If $\{s_i \in \mcF(U_i)\}_{i\in I}$ is
+              a collection of sections such that
+              \begin{equation*}
+                  s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j} \text { for all } i, j,
+              \end{equation*}
+              then there is a section $s\in \mcF(U)$ such that $s_i = s|_{U_i}$ for all $i \in I$.
+    \end{itemize}
+
+\end{frame}
+\begin{frame}
+    \frametitle{Examples}
+
+    Typical examples are rings of functions:
+    \begin{itemize}
+        \item $C(-, \bbC)$
+        \item $C^\infty(-, \bbC)$
+    \end{itemize}
+    \pause
+    \medskip
+
+    \medskip
+    The constant functor $U \mapsto Y$ is \emph{not} a sheaf!
+
+    Uniqueness axiom implies $\mcF(\emptyset) = \{*\}$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Limits and Colimits}
+
+    \begin{proposition}
+        Limits and colimits of presheaves can be computed
+        section-wise, i.e. the functor $\mcF \mapsto \mcF(U)$
+        commutes with all limits and colimits.
+    \end{proposition}
+
+    \pause
+    \begin{example}
+        $(\mcF\times \mcG )(U) = \mcF(U) \times \mcG(U)$
+    \end{example}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sheafification}
+
+    \begin{center}
+        Can we do the same for sheaves?
+    \end{center}
+    \pause
+    \begin{itemize}
+        \item Limits: ok.
+        \item Colimits: not always a sheaf.
+    \end{itemize}
+    There is a solution:
+    \pause
+    \begin{theorem}
+        The fully faithful inclusion $\iota \colon \Sh(X) \injto \PSh(X)$
+        admits an \emph{exact} left adjoint: \emph{sheafification}.
+    \end{theorem}
+    \begin{example}
+        Sheafification of $U \mapsto Y$, is $U \mapsto C(U, Y_{\text{discrete}})$.
+    \end{example}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Abelian Sheaves}
+
+    \begin{proposition}
+        The category of abelian sheaves on a topological space $X$
+        is abelian, and has enough injectives.
+    \end{proposition}
+
+    \begin{example}
+        If $M$ is an injective object in $\Ab$, i.e. a divisible group,
+        then for $x\in X$,
+        \begin{equation*}
+            U \mapsto
+            \begin{cases}
+                M     & x \in U    \\
+                \{*\} & x \notin U
+            \end{cases}
+        \end{equation*}
+        is an injective sheaf.
+    \end{example}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sheaf Cohomology}
+
+    If
+    \begin{equation*}
+        \begin{tikzcd}
+            0 \rar & \mcF \rar & \mcF' \rar & \mcF'' \rar & 0
+        \end{tikzcd}
+    \end{equation*}
+    is exact then globally we only get
+    \begin{equation*}
+        \begin{tikzcd}
+            0 \rar & \mcF(X) \rar & \mcF'(X) \rar & \mcF''(X)
+        \end{tikzcd}
+    \end{equation*}
+    \pause
+
+    \begin{definition}
+
+    \end{definition}
+\end{frame}
+\end{document}
