@@ -62,8 +62,10 @@
     \begin{itemize}
         \item Elements of $\mcF(U)$ are called \emph{sections}
         \item If $ i \colon U\injto V$ then $\mcF(i)$ is
-              called the \emph{restriction} map
-        \item $s\in \mcF(V) \mapsto s|_U \in \mcF(U)$.
+              called the \emph{restriction} map:
+              \begin{equation*}
+                  s\in \mcF(V) \mapsto s|_U \in \mcF(U).
+              \end{equation*}
     \end{itemize}
 
 \end{frame}
@@ -110,7 +112,7 @@
 
     Typical examples are rings of functions:
     \begin{itemize}
-        \item $C(-, \bbC)$
+        \item $\Cont(-, \bbC)$
         \item $C^\infty(-, \bbC)$
     \end{itemize}
     \pause
@@ -156,7 +158,7 @@
         admits an \emph{exact} left adjoint: \emph{sheafification}.
     \end{theorem}
     \begin{example}
-        Sheafification of $U \mapsto Y$, is $U \mapsto C(U, Y_{\text{discrete}})$.
+        Sheafification of $U \mapsto Y$, is $U \mapsto \Cont(U, Y_{\text{discrete}})$.
     \end{example}
 
 \end{frame}
@@ -189,20 +191,161 @@
 
     If
     \begin{equation*}
-        \begin{tikzcd}
-            0 \rar & \mcF \rar & \mcF' \rar & \mcF'' \rar & 0
+        \begin{tikzcd}[ampersand replacement=\&]
+            0 \rar \& \mcF \rar \& \mcF' \rar \& \mcF'' \rar \& 0
         \end{tikzcd}
     \end{equation*}
-    is exact then globally we only get
+    is exact, then globally we only get
     \begin{equation*}
-        \begin{tikzcd}
-            0 \rar & \mcF(X) \rar & \mcF'(X) \rar & \mcF''(X)
+        \begin{tikzcd}[ampersand replacement=\&]
+            0 \rar \& \mcF(X) \rar \& \mcF'(X) \rar \& \mcF''(X)
         \end{tikzcd}
     \end{equation*}
     \pause
+    $\leadsto$ Right derived functors $H^i(X, -)$ of $\mcF \mapsto \mcF(X)$
+    \begin{definition}
+        The sheaf cohomology of $X$ with coefficients $A$ is $H^i(X, \Cont(- , A))$.
+    \end{definition}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Computing Homology}
+
+    We have
+    \begin{equation*}
+        \begin{tikzcd}[ampersand replacement=\&, sep=small, cramped]
+            0 \rar \& \Cont(\bbZ, -) \rar \& \Cont(\bbR, -) \rar
+            \& \Cont(\bbR/\bbZ, -) \rar \& 0
+        \end{tikzcd}
+    \end{equation*}
+    since every map $U\subseteq S^1 \to S^1$ can be
+    lifted \emph{locally} to a map $U \to \bbR$.
+
+    \medskip
+    But, there is no global lift of $\id\colon S^1 \to S^1$
+    to $S^1 \to \bbR$.
+    So $H^1(S^1, \bbZ) \neq 0$.
+
+    \medskip
+    \pause
+    \begin{proposition}
+        If $S$ is a CW-complex:
+        \begin{equation*}
+            H^i_{\text{sheaf}}(S, \bbZ) = H^i_{\text{singular}}(S, \bbZ).
+        \end{equation*}
+    \end{proposition}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sites}
+
+    \begin{itemize}
+        \item Need a slight abstraction of sheaves on a space.
+        \item Want sheaves on categories, not just spaces.
+        \item Crucial ingredient: coverings.
+    \end{itemize}
+    \medskip
+
+    \pause
+    $\leadsto$ Definition of a site $\approx $ ``Category + notion of coverings''.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Condensed Sets}
 
     \begin{definition}
-
+        A \emph{condensed set}$^*$ is a sheaf on the site of profinite sets
+        with coverings given by jointly surjective maps.
     \end{definition}
+    \medskip
+    \pause
+    % Concretely:
+    % \begin{itemize}
+    %     \item A functor $T \colon \{\text{profinite sets}\}^{\opp} \to \Set/\Rng/\Ab/...$
+    %     \item $T(\emptyset) = \{*\}$.
+    %     \item $T(S_1 \sqcup S_2) \to T(S_1) \times T(S_2)$ is a bijection.
+    %     \item For $S' \surjto S$ a surjection, and $S' \times_S S'$ the pullback
+    %           with projections $p_1, p_2$, the map
+    %           \begin{equation*}
+    %               T(S) \to \{x\in T(S') \mid p_1^*(x) = p_2^*(x)\in T(S'\times_S S')\}
+    %           \end{equation*}
+    %           is a bijection.
+    % \end{itemize}
+
+    For a topological space $X$, we have an associated
+    condensed set $\underline{X} = \Cont(-, X)$.
+
+\end{frame}
+\begin{frame}
+    \frametitle{Profinite sets}
+
+
+    \begin{definition}
+        A \emph{profinite set} is a compact, Hausdorff, totally disconnected space.
+    \end{definition}
+    \begin{example}
+        A finite discrete space
+    \end{example}
+    \pause
+
+    \begin{proposition}
+        A limit of profinite sets is profinite.
+        In particular, products of profinite sets
+        are again profinite.
+    \end{proposition}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{The motivating problem}
+
+    \textbf{Claim}: for condensed sets the map:
+    \begin{equation*}
+        \underline{\id} \colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidean}}}
+    \end{equation*}
+    is no longer an epimorphism.
+    \pause
+
+    \medskip
+    Let $S \subset \bbR_{\text{Euclidean}}$ be the cantor set.
+    $ S \cong \prod_{n\in \bbN}\{0,1\}$,
+    so $S$ is profinite.
+    Hence:
+    \begin{equation*}
+        \Cont(S, \bbR_{\text{discrete}}) \subsetneq \Cont(S, \bbR_{\text{Euclidean}})
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Condensed cohomology}
+
+    For a condensed set $T$, let $\bbZ[T]$ be the sheafification
+    of $S \mapsto \bbZ[T(S)]$.
+    \begin{definition}
+        The cohomology of $S$ with coefficients $A$ is
+        \begin{equation*}
+            H^i (S, A) = \Ext^i(\bbZ[\underline{S}], \underline{A})
+        \end{equation*}
+    \end{definition}
+
+    \pause
+    \begin{theorem}[\cite{Sch2019LecturesCM}, Theorem 3.2]
+        Let $S$ be a compact Hausdorff space. Then
+        \begin{equation*}
+            H^i_{\text{cond}}(S, A) \cong H^i_{\text{sheaf}}(S, A)
+        \end{equation*}
+    \end{theorem}
+\end{frame}
+
+\bibliographystyle{alpha}
+\begin{frame}{References}
+    \nocite{Sch2019LecturesCM}
+    \nocite{Apa2021condensed}
+    \nocite{stacks-project}
+    \nocite{Sch2020MasterClass}
+    \bibliography{references.bib}
 \end{frame}
 \end{document}
