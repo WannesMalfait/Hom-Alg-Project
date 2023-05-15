@@ -126,7 +126,7 @@
     \medskip
     The constant functor $U \mapsto Y$ is \emph{not} a sheaf!
 
-    Uniqueness axiom implies $\mcF(\emptyset) = \{*\}$
+    Sheaf conditions imply $\mcF(\emptyset) = \{*\}$
 \end{frame}
 
 \begin{frame}
@@ -220,8 +220,8 @@
     We have
     \begin{equation*}
         \begin{tikzcd}[ampersand replacement=\&, sep=small, cramped]
-            0 \rar \& \Cont(\bbZ, -) \rar \& \Cont(\bbR, -) \rar
-            \& \Cont(\bbR/\bbZ, -) \rar \& 0
+            0 \rar \& \Cont(-, \bbZ) \rar \& \Cont(-, \bbR) \rar
+            \& \Cont(-, \bbR/\bbZ) \rar \& 0
         \end{tikzcd}
     \end{equation*}
     since every map $U\subseteq S^1 \to S^1$ can be
@@ -259,32 +259,6 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Condensed Sets}
-
-    \begin{definition}
-        A \emph{condensed set}$^*$ is a sheaf on the site of profinite sets
-        with coverings given by finite families of jointly surjective maps.
-    \end{definition}
-    \medskip
-    \pause
-    % Concretely:
-    % \begin{itemize}
-    %     \item A functor $T \colon \{\text{profinite sets}\}^{\opp} \to \Set/\Rng/\Ab/...$
-    %     \item $T(\emptyset) = \{*\}$.
-    %     \item $T(S_1 \sqcup S_2) \to T(S_1) \times T(S_2)$ is a bijection.
-    %     \item For $S' \surjto S$ a surjection, and $S' \times_S S'$ the pullback
-    %           with projections $p_1, p_2$, the map
-    %           \begin{equation*}
-    %               T(S) \to \{x\in T(S') \mid p_1^*(x) = p_2^*(x)\in T(S'\times_S S')\}
-    %           \end{equation*}
-    %           is a bijection.
-    % \end{itemize}
-
-    For a topological space $X$, we have an associated
-    condensed set $\underline{X} = \Cont(-, X)$.
-
-\end{frame}
-\begin{frame}
     \frametitle{Profinite sets}
 
 
@@ -305,16 +279,52 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Condensed Sets}
+
+    \begin{definition}
+        A \emph{condensed set}\onslide<2->{$^*$} is a sheaf on the site of profinite sets
+        with coverings given by finite families of jointly surjective maps.
+    \end{definition}
+    \medskip
+    \pause[3]
+    \begin{proposition}
+        Condensed abelian groups form an abelian category, and
+        limits and colimits can be computed section-wise.
+    \end{proposition}
+
+    \pause
+
+    For a topological space $X$, the associated condensed set $\underline{X}$
+    is given by $\Cont(-,X)$.
+\end{frame}
+
+\begin{frame}
     \frametitle{The motivating problem}
 
-    \textbf{Claim}: for condensed sets the map:
+    Recall that
+    \begin{equation*}
+        \id \colon \bbR_{\text{discrete}} \to \bbR_{\text{Euclidean}}
+    \end{equation*}
+    was both a monomorphism and an epimorphism but not an isomorphism.
+    \pause
+
+    \textbf{Claim}: As condensed abelian groups, the map:
     \begin{equation*}
         \underline{\id} \colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidean}}}
     \end{equation*}
     is no longer an epimorphism.
-    \pause
+\end{frame}
+\begin{frame}
+    \frametitle{The Cantor Set}
+    Enough to show:
+    \begin{equation*}
+        \Cont(S, \bbR_{\text{discrete}}) \subsetneq \Cont(S, \bbR_{\text{Euclidean}})
+    \end{equation*}
+    for some profinite set $S$.
 
+    \pause
     \medskip
+
     Let $S \subset \bbR_{\text{Euclidean}}$ be the cantor set.
     $ S \cong \prod_{n\in \bbN}\{0,1\}$,
     so $S$ is profinite.
@@ -327,8 +337,8 @@
         \centering
         \includegraphics[scale=0.5]{Cantor_set_in_seven_iterations.pdf}
     \end{figure}
-\end{frame}
 
+\end{frame}
 \begin{frame}
     \frametitle{Condensed cohomology}
 
