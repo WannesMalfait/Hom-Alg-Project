@@ -285,7 +285,9 @@
         A \emph{condensed set}\onslide<2->{$^*$} is a sheaf on the site of profinite sets
         with coverings given by finite families of jointly surjective maps.
     \end{definition}
-    \medskip
+    \begin{center}
+        $T \colon \{\text{Profinite sets}\}^{\opp} \to \Set / \Ab / \Rng / \dots$
+    \end{center}
     \pause[3]
     \begin{proposition}
         Condensed abelian groups form an abelian category, and
@@ -340,20 +342,43 @@
 
 \end{frame}
 \begin{frame}
-    \frametitle{Condensed cohomology}
+    \frametitle{Free condensed abelian groups}
 
+    \begin{center}
+        \textit{What is cohomology of condensed abelian groups?}
+    \end{center}
+    \pause
+    \textbf{Problem}: not enough injectives
+    \medskip
+
+    \pause
     For a condensed set $T$, let $\bbZ[T]$ be the sheafification
     of $S \mapsto \bbZ[T(S)]$.
+
+    \begin{proposition}
+        The functor $\bbZ[-]$ is a left adjoint to the forgetful functor
+        from condensed abelian groups to condensed sets.
+    \end{proposition}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Condensed Cohomology}
+    Let $X$ be a topological space, and $M$ a condensed abelian group.
+    By Yoneda's lemma:
+    \begin{equation*}
+        \Hom_{\mathbf{Cond}(\Ab)}(\bbZ[\underline{X}], M) \cong
+        \Hom_{\mathbf{Cond}(\Set)}(\underline{X}, M) \cong M(X)
+    \end{equation*}
+    \pause
     \begin{definition}
         The cohomology of $X$ with coefficients $A$ is
         \begin{equation*}
             H^i (X, A) = \Ext^i(\bbZ[\underline{X}], \underline{A})
         \end{equation*}
     \end{definition}
-
     \pause
     \begin{theorem}[\cite{Sch2019LecturesCM}, Theorem 3.2]
-        Let $S$ be a compact Hausdorff space. Then
+        Let $X$ be a compact Hausdorff space. Then
         \begin{equation*}
             H^i_{\text{cond}}(X, A) \cong H^i_{\text{sheaf}}(X, A)
         \end{equation*}
