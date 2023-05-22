@@ -1214,7 +1214,9 @@ With a topological space $X$, we can associate a
 condensed set $\underline{X} = \Cont(-, X)$. The
 ``underlying set'' can then be found as $\underline{X}(\{*\})$.
 The point is that the map
-$f\colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidian}}}$
+\begin{equation*}
+    \underline{\id}\colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidian}}}
+\end{equation*}
 is no longer an epimorphism. As we will see later on, the cokernel
 of this map can be computed ``section-wise'', i.e. $\Coker(f)(U) = \Coker(f_U)$.
 So, to show that the cokernel is not trivial, we need to show that
@@ -1246,15 +1248,88 @@ prove this, we'll need an alternative description of condensed sets.
     An \emph{extremally disconnected} set is a projective object
     in the category of compact Hausdorff spaces\footnote{
         The usual definition is that the closure of
-        every open set must again be open. In this case,
+        every open set must again be open. In this setting
         the two definitions are equivalent
         (\cite[Theorem 2.5]{Gle1958ProjectiveTS})}.
 \end{definition}
+One way to construct these extremally disconnected spaces, is
+through Stone--\v{C}ech compactification.
+\begin{theorem}[Stone--\v{C}ech compactification]
+    Let $X$ be a topological space. There is a unique (up to isomorphism)
+    compact Hausdorff space $\beta X$ together with a continuous map
+    $i_X \colon X \to \beta X$, such that for any continuous map
+    $f \colon X \to K$, with $K$ a compact and Hausdorff space, there is
+    a unique extension of $f$ to a continuous map $\beta f \colon \beta X \to K$:
+    \begin{equation*}
+        \begin{tikzcd}
+            X \rar["i_X"] \ar[rd, "f"'] & \beta X  \dar[dashed, "\beta f"]\\
+            & K
+        \end{tikzcd}
+    \end{equation*}
+    In terms of cardinality, we have $|\beta X| \leq 2^{\left(2^{|X|}\right)}$.
+\end{theorem}
+See, for example, \cite[\href{https://stacks.math.columbia.edu/tag/0908}{Section 0908}]{stacks-project}
+for a proof. Now, let $X$ be a compact Hausdorff space,
+and let $X'$ be the same space equipped with the discrete topology.
+Then the map $\id \colon X' \to X$ is continuous, and by
+the universal property of the Stone--\v{C}ech compactification,
+we have a factorization:
+\begin{equation*}
+    \begin{tikzcd}
+        X' \rar["i_{X'}"] \ar[rd, "\id"'] & \beta X ' \dar[dashed, "\beta \id"]\\
+        & X
+    \end{tikzcd}.
+\end{equation*}
+Since $\id$ is bijective, it follows
+that $i_{X'}$ is injective, and $\beta \id$ is surjective.
 
-One can show that every compact Hausdorff space is the
-surjective image of an extremally disconnected set,
-i.e. the category has enough projectives
-(\cite[Theorem 3.2]{Gle1958ProjectiveTS}).
+We claim that $\beta X'$ is extremally disconnected.
+So, let $e \colon K \surjto S$ be an epimorphism between compact Hausdorff spaces,
+and $f\colon \beta X' \to S$ be any map.
+Since any set is projective in $\Set$, there is a map (of sets)
+$g \colon X' \to K$ such that $e\circ g = f \circ i_{X'}$.
+Since $X'$ has the discrete topology, the map $g$ is continuous.
+Hence, by the universal property of the Stone--\v{C}ech compactification,
+there is a unique continuous map $\beta g \colon \beta X' \to K$ such that
+$g = \beta g \circ i_{X'}$.
+\begin{equation*}
+    \begin{tikzcd}
+        X' \rar[hook, "i_{X'}"] \dar["g"] & \beta X \dar["f"] \ar[ld, dashed, "\beta g"] \\
+        K \rar[two heads, "e"'] & S
+    \end{tikzcd}
+\end{equation*}
+So
+\begin{equation*}
+    f \circ i_{X'} = e \circ g = e \circ \beta g \circ i_{X'},
+\end{equation*}
+and hence $f = e \circ \beta g$, since $i_{X'}$ is a monomorphism.
+
+So, we have shown that any compact Hausdorff space admits a surjection from
+and extremally disconnected space, i.e. the category has enough projectives.
+This allows for the following alternative description.
+\begin{prop}
+    The category of sheaves on the site, $\mcE$, of $\kappa$-small extremally disconnected spaces, with
+    covers given by finite families of jointly surjective maps, is
+    equivalent to the category of $\kappa$-condensed sets. A sheaf on $\kappa$-small
+    extremally disconnected spaces is a functor
+    \begin{equation*}
+        T \colon \{\text{extremally disconnected spaces}\}^{\opp} \to \Set / \Rng / \Ab/ \dots
+    \end{equation*}
+    with $T(\emptyset) = \{*\}$, and
+    such that $T(S_1 \sqcup S_2) \to T(S_1) \times T(S_2)$ is a bijection
+    for any two extremally disconnected sets $S_1, S_2$ with cardinality smaller than $\kappa$.
+\end{prop}
+\begin{proof}
+    It remains to prove the alternative characterization of sheaves on $\mcE$.
+    The sheaf condition states that for any cover $\{f_i \colon S_i \to S\}_{i=1}^n$,
+    the natural map
+    \begin{equation*}
+        T(S) \to
+        \{(s_i)_{i=1}^n \in \prod_{i=1}^n T(S_i) \mid s_i |_{S_i \times_S S_j} = s_j |_{S_i \times_S S_j}\}
+    \end{equation*}
+    is a bijection.
+\end{proof}
+
 TODO:
 - Show that category of $\kappa$-condensed equivalent to extremally disconnected version.
 - Show that limits and colimits can be taken section-wise.
