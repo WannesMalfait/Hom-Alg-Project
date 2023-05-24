@@ -854,7 +854,40 @@ a more abstract approach like in
          & = \Img(\alpha).
     \end{align*}
 \end{proof}
-TODO: example where Coker really needs the sheafification.
+
+Taking the sheafification is really needed when
+taking colimits. This is illustrated in the following
+example.
+\begin{example}
+    Consider the two sheaves $\Cont(-, \bbR)$ and
+    $\Cont(-, 2\pi \bbZ)$ on the circle $S^1 \subseteq \bbC$.
+    We claim that the quotient $\Cont(-, \bbR)/ \Cont(-, 2\pi \bbZ)$
+    as presheaves is not a sheaf. For this, consider
+    the two open sets
+    $U_1 = \{e^{i\theta} \in S^1 \mid \theta \in(0, 2\pi) \}$ and
+    $U_2 = \{e^{i\theta} \in S^1 \mid \theta \in(-\varepsilon, \varepsilon) \}$.
+    We have continuous functions $f_i \colon U_i \to \bbR$ given by
+    $f_1(e^{i\theta}) = \theta \in (0, 2\pi )$, and
+    $f_2(e^{i\theta}) = \theta \in (- \varepsilon, \varepsilon)$.
+    Let $V = U_1 \cap U_2 = \{e^{i\theta} \in S^1 \mid \theta \in (-\varepsilon,0)\cup(0, \varepsilon) \}$.
+    Then
+    \begin{equation*}
+        (f_1 |_V - f_2 |_V)(e^{i \theta}) =
+        \begin{cases}
+            2 \pi & \theta \in (-\varepsilon, 0) \\
+            0     & \theta \in (0, \varepsilon)  \\
+        \end{cases},
+    \end{equation*}
+    so $f_1|_{V} - f_2|_V \in \Cont(V, 2 \pi \bbZ)$ as it is locally constant.
+    Consequently, the two functions agree on overlaps in the quotient.
+    If $\Cont(-, \bbR)/\Cont(-, 2\pi \bbZ)$
+    were a sheaf, then we would be able to glue the two functions together
+    to a function $\bar{f} \in \Cont(S^1, \bbR)/ \Cont(S^1 , 2\pi \bbZ)$
+    such that $\bar{f_1} = \bar{f}|_{U_1}$ and $\bar{f_2} = \bar{f}|_{U_2}$.
+    Since $S^1$ is connected, the elements of $\Cont(S^1, 2 \pi \bbZ)$ are
+    constant functions. So, $f_1 |_V - f|_V$, and $f_2 |_ V - f|_V$ would
+    have to be constants, and hence also $f_1 |_V - f_2 |_V$, a contradiction.
+\end{example}
 
 We will now restrict ourselves to the special case
 where $\mcC = \Open(X)$ for some topological space $X$.
@@ -1026,7 +1059,27 @@ while filling out the details.
               naturality of $\beta$ gives $\beta_{f\inv(V)}^V |_U = \beta_U^V$,
               so $\eta_U^V = \beta_U^V$.
 
-              TODO: naturality in $\mcF$ and $\mcG$.
+              The final thing to check is that the transformations are natural
+              in $\mcF$ and $\mcG$. Let us denote $\Phi$ for the map
+              from $\Hom_{\Ab(X)}(f^* \mcG, \mcF)$ to $\Hom_{\Ab(Y)}(\mcG, f_*\mcF)$.
+              Let us start with naturality in $\mcF$.
+              If $\gamma \colon \mcF \to \mcF'$ is a natural transformation, we need
+              to show that $\Phi(\gamma \beta) = f_*\gamma \Phi(\beta)$ for any
+              morphism $\beta \colon f^*\mcG \to \mcF$. Indeed,
+              \begin{equation*}
+                  \Phi(\gamma \alpha)_V = (\gamma \alpha)_{f\inv(V)}^V
+                  = \gamma_{f\inv(V)}\alpha_{f\inv(V)}^V
+                  = (f_*\gamma)_V \Phi(\alpha)_V.
+              \end{equation*}
+              For $\eta \colon \mcG \to \mcG'$, we need to show that
+              $\Phi(\beta f^*\eta) = \Phi(\beta)\eta$. The following
+              calculation shows that this is indeed the case
+              \begin{equation*}
+                  \Phi(\beta f^* \gamma)_V =(\beta f^* \gamma)_{f\inv(V)}^V
+                  = \beta_{f\inv(V)}^V \gamma_V = \Phi(\beta)_V \gamma_V.
+              \end{equation*}
+
+
         \item $f^*$ is exact. Since it is a left adjoint, it is right exact.
               We still need to show that it is left exact, i.e. $f^*$ preserves
               monomorphisms. Let $\alpha\colon \mcF \to \mcG$ be a monomorphism.
@@ -1082,7 +1135,6 @@ needed to be able to do cohomology in $\Ab(X)$.
     finite limits, we have that $(\alpha_x)_V$ is indeed a monomorphism.
     So, if $x,y\in V$ with $\alpha_V(x) = \alpha_V(y)$, then $x=y$,
     which shows that $\alpha$ is a monomorphism.
-    TODO: Make this proof clearer.
 \end{proof}
 
 In the previous proof we considered the inclusion map.
@@ -1097,7 +1149,50 @@ Let $f\colon X \to Y$ be a continuous function.
 Since $f_*$ is a right adjoint, it is left exact, and
 we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
 
-TODO: example about sheaf cohomology.
+\begin{example}
+    Let us look at the specific example where $f \colon S^1 \to \{*\}$
+    is the projection map. We have an exact sequence of sheaves on $S^1$
+    \begin{equation*}
+        \begin{tikzcd}
+            0 \rar & \Cont(-, 2\pi \bbZ) \rar["f"] & \Cont(-, \bbR)
+            \rar["g"] & \Cont(-, S^1) \rar & 0.
+        \end{tikzcd}
+    \end{equation*}
+    To check that $f$ is a monomorphism, we can check it locally. Since
+    each of the maps $f_U \colon \Cont(U, 2\pi \bbZ) \to \Cont(U, \bbR)$ are injective,
+    so is $f$. The kernel of $g$ can be computed locally as well.
+    For every open $U$ in $S^1$, we have that $h \in \Cont(U, \bbR)$ is
+    mapped to $\pi \circ h$ where $\pi \colon \bbR \to S^1 = \bbR / (2\pi \bbZ)$
+    is the quotient map. So the kernel of $g_U$ is given by the functions
+    whose image lies in $2\pi \bbZ$. In other words, $\Ker(g_U) = \Cont(U, 2\pi \bbZ)$.
+    This shows exactness at the middle. What remains to show is that $g$ is an
+    epimorphism. For this, we need to check that for every open $U$ in $S^1$,
+    and continuous function $s \in \Cont(U, S^1)$, there is a cover ${U_i}_{i\in I}$
+    of $U$ such that $s|_{U_i}$ is in the image of $g_U$. Let $U_1 = U \cap S^1 \setminus \{1\} $
+    and $U_2 = U \cap S^2 \setminus \{2\}$. Then $\{U_1,U_2\}$ is an open cover
+    of $U$, and each of the elements in the cover is homeomorphic to an open subset of $\bbR$.
+    So for $s\in \Cont(U, S^1)$, we have that $s|_{U_1}$ and $s|_{U_2}$
+    are in the image of $g_{U_1}$ and $g_{U_2}$.
+
+    On the other hand, the map $\Cont(S^1 , \bbR) \to \Cont(S^1, S^1)$ is
+    not an epimorphism. After all, $\bbR$ is contractible, so any
+    function in $\Cont(S^1, \bbR)$ is homotopic to the zero function. Hence,
+    all the functions in the image will also be homotopic to the zero map.
+    Since $S^1$ has a non-trivial fundamental group, we see that image
+    is not everything.
+
+    Consequently, we only get a left exact sequence
+    \begin{equation*}
+        \begin{tikzcd}
+            0 \rar & \Cont(S^1, 2\pi \bbZ) \rar["f"] & \Cont(S^1, \bbR)
+            \rar["g"] & \Cont(S^1, S^1),
+        \end{tikzcd}
+    \end{equation*}
+    when we apply $f_*$. It follows that the derived functor $R^1f_*$ is
+    non-zero. In fact, one can show that $R^1f_*(\Cont(-, \bbZ)) = \bbZ$.
+    More generally, $R^if_*(\Cont(-, \bbZ)) = H^i(S^1 , \bbZ)$, where
+    $H^i(S^1, \bbZ)$ is the singular cohomology.
+\end{example}
 \section{Condensed sets}
 
 We now have all the necessary material to be able to say a little
@@ -1328,11 +1423,11 @@ This allows for the following alternative description.
         \{(s_i)_{i=1}^n \in \prod_{i=1}^n T(S_i) \mid s_i |_{S_i \times_S S_j} = s_j |_{S_i \times_S S_j}\}
     \end{equation*}
     is a bijection.
+
+    TODO: Give the definition using sieves first, and then use this to
+    show the theorem.
 \end{proof}
 
-TODO:
-- Show that category of $\kappa$-condensed equivalent to extremally disconnected version.
-- Show that limits and colimits can be taken section-wise.
 
 
 
