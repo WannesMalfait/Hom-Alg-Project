@@ -1401,6 +1401,30 @@ and hence $f = e \circ \beta g$, since $i_{X'}$ is a monomorphism.
 
 So, we have shown that any compact Hausdorff space admits a surjection from
 and extremally disconnected space, i.e. the category has enough projectives.
+We now want to describe $\kappa$-condensed sets, by restricting to
+just the category of extremally disconnected spaces. However, there is a small
+technicality that we have to take care of first. The product of two
+infinite extremally disconnected spaces is never extremally disconnected. So,
+we can't take fiber products, and so there is a problem in defining a site
+on this category. The solution is to consider an alternative description
+of what a site is.
+
+One defines a \emph{sieve} on an object $U \in \mcC$ as a subfunctor
+of its Yoneda embedding $\Hom(- ,U)$. So, it is a functor $S \colon \mcC^{\opp} \to \mcC$
+such that for any $U' \in \mcC$ we have $S(U') \subseteq \Hom(U', U)$,
+and for all morphisms $f\colon V \to V'$, $S(f)$ is the restriction
+of $\Hom(f, U)$ to $S(V')$. A site becomes a category together with
+a Grothendieck topology. Namely, for each object of $\mcC$,
+we choose a collection of sieves on that object, called covering sieves.
+These must again satisfy axioms similar to those for covers:
+\begin{enumerate}
+    \item If $S$ is a covering sieve on $X$
+    TODO: axioms
+\end{enumerate} 
+TODO: explain what sheaf is in this context.
+TODO: explain what site of extremally disconnected becomes.
+TODO: how to get sieves from covers.
+
 This allows for the following alternative description.
 \begin{prop}
     The category of sheaves on the site, $\mcE$, of $\kappa$-small extremally disconnected spaces, with
