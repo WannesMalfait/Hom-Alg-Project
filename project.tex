@@ -1409,51 +1409,88 @@ we can't take fiber products, and so there is a problem in defining a site
 on this category. The solution is to consider an alternative description
 of what a site is.
 
-One defines a \emph{sieve} on an object $U \in \mcC$ as a subfunctor
-of its Yoneda embedding $\Hom(- ,U)$. So, it is a functor $S \colon \mcC^{\opp} \to \mcC$
-such that for any $U' \in \mcC$ we have $S(U') \subseteq \Hom(U', U)$,
-and for all morphisms $f\colon V \to V'$, $S(f)$ is the restriction
-of $\Hom(f, U)$ to $S(V')$. A site becomes a category together with
+One defines a \emph{sieve} on an object $X \in \mcC$ as a subfunctor
+of its Yoneda embedding $\Hom(- ,X)$. So, it is a functor $S \colon \mcC^{\opp} \to \mcC$
+such that for any $X' \in \mcC$ we have $S(X') \subseteq \Hom(X', X)$,
+and for all morphisms $f\colon Y \to Y'$, $S(f)$ is the restriction
+of $\Hom(f, X)$ to $S(Y')$. A site becomes a category together with
 a Grothendieck topology. Namely, for each object of $\mcC$,
 we choose a collection of sieves on that object, called covering sieves.
 These must again satisfy axioms similar to those for covers:
 \begin{enumerate}
-    \item If $S$ is a covering sieve on $X$
-    TODO: axioms
-\end{enumerate} 
-TODO: explain what sheaf is in this context.
-TODO: explain what site of extremally disconnected becomes.
-TODO: how to get sieves from covers.
+    \item $\Hom(-, X)$ is a covering sieve for any $X$ in $\mcC$.
+    \item If $S$ is a covering sieve on $X$, $T$ is sieve on $X$,
+          and for any $f\in S$ the sieve $f^*T$ is a covering sieve,
+          then $T$ is a covering sieve.
+    \item If $S$ is a covering sieve on $X$, and $f\colon X \to Y$ is
+          a morphism, then the pullback $f^*S$ is a covering sieve on $Y$.
+\end{enumerate}
+Here the pullback of $S$ by $f\colon Y \to X$ is given by
+$f^*S(Z)= \{g\colon Z \to Y \mid f\circ g \in S(Z)\}$.
+Importantly, the definition doesn't require the existence of pullbacks.
+The sheaf condition for a presheaf $\mcF$, is that for any
+object $X$ and any covering sieve $S$ on $X$, the map
+\begin{equation*}
+    \Hom(\Hom(-, X), \mcF) \to \Hom(S, \mcF)
+\end{equation*}
+induced by the inclusion of $S$ in $\Hom(-, X)$, is a bijection.
+In other words, every natural transformation from $S$ to $\mcF$
+extends uniquely to a natural transformation from $\Hom(-, X)$
+to $\mcF$.
 
-This allows for the following alternative description.
-\begin{prop}
-    The category of sheaves on the site, $\mcE$, of $\kappa$-small extremally disconnected spaces, with
-    covers given by finite families of jointly surjective maps, is
-    equivalent to the category of $\kappa$-condensed sets. A sheaf on $\kappa$-small
-    extremally disconnected spaces is a functor
-    \begin{equation*}
-        T \colon \{\text{extremally disconnected spaces}\}^{\opp} \to \Set / \Rng / \Ab/ \dots
-    \end{equation*}
-    with $T(\emptyset) = \{*\}$, and
-    such that $T(S_1 \sqcup S_2) \to T(S_1) \times T(S_2)$ is a bijection
-    for any two extremally disconnected sets $S_1, S_2$ with cardinality smaller than $\kappa$.
-\end{prop}
+A collection of covers satisfying the axioms from our original definition
+of a site, is referred to as a pretopology. Given such a pretopology
+we can make a Grothendieck topology by taking as covering sieves,
+precisely those sieves which contain a cover from the pretopology.
+The crucial part is that these two sites give rise to the same category
+of sheaves (\cite[Corollary 1.1.28]{Dag2021FoundationsCM}).
+
+So we can define the site of $\kappa$-small extremally
+disconnected spaces, with covers given by finite families
+of jointly surjective maps. That this generates a Grothendieck
+topology is shown in \cite[Proposition 1.2.12]{Dag2021FoundationsCM}.
+Finally, it turns out that restricting to $\kappa$-small extremally disconnected
+spaces gives an equivalent category of sheaves, to the category
+of $\kappa$-condensed sets (\cite[Theorem 1.2.16]{Dag2021FoundationsCM}).
+Here it is crucial that the cardinality of the Stone--\v{C}ech compactification
+is bounded. Since $\kappa$ is an uncountable strong limit cardinal,
+we know that if $|X| < \kappa$ then also $|\beta X| < \kappa$.
+
+Checking that a presheaf is a sheaf, becomes a lot easier now.
+A sheaf on $\kappa$-small
+extremally disconnected spaces is a functor
+\begin{equation*}
+    T \colon \{\text{extremally disconnected spaces}\}^{\opp} \to \Set / \Rng / \Ab/ \dots
+\end{equation*}
+with $T(\emptyset) = \{*\}$, and
+such that $T(S_1 \sqcup S_2) \to T(S_1) \times T(S_2)$ is a bijection
+for any two extremally disconnected sets $S_1, S_2$
+with cardinality smaller than $\kappa$ (\cite[Theorem 1.2.18]{Dag2021FoundationsCM}).
+As a result we find:
+\begin{corollary}
+    The category of $\kappa$-condensed sets is abelian. Limits
+    and colimits can be taken section-wise.
+\end{corollary}
 \begin{proof}
-    It remains to prove the alternative characterization of sheaves on $\mcE$.
-    The sheaf condition states that for any cover $\{f_i \colon S_i \to S\}_{i=1}^n$,
-    the natural map
-    \begin{equation*}
-        T(S) \to
-        \{(s_i)_{i=1}^n \in \prod_{i=1}^n T(S_i) \mid s_i |_{S_i \times_S S_j} = s_j |_{S_i \times_S S_j}\}
-    \end{equation*}
-    is a bijection.
-
-    TODO: Give the definition using sieves first, and then use this to
-    show the theorem.
+    Note that limits and colimits in $\Ab$ commute with finite products.
+    Additionally, we already saw that the section-wise limit and colimit
+    of presheaves is again a presheaf (\cref{lem:lims_colims_presheaves}).
+    Now assume that $(T_i)_{i\in \mcI}$ are sheaves. Taking their
+    limit or colimit as presheaves will then again be a sheaf,
+    since
+    \begin{align*}
+        (\lim_{i\in \mcI}T_i)(S_1 \sqcup S_2)
+         & = \lim_{i\in \mcI} T_i(S_1 \sqcup S_2)                            \\
+         & = \lim_{i\in \mcI} (T_i(S_1) \times T_i(S_2))                     \\
+         & = \lim_{i\in \mcI} T_i(S_1) \times \lim_{i\in \mcI} T_i(S_2)      \\
+         & = (\lim_{i\in \mcI} T_i)(S_1) \times (\lim_{i\in \mcI} T_i)(S_2),
+    \end{align*}
+    and similarly for colimits.
 \end{proof}
 
-
-
+So, problems with colimits, where we need to take the sheafification
+do not occur in this setting. As a final thing to consider, let
+us take a look at cohomology in the condensed setting.
 
 \subsection{Condensed cohomology}
 
