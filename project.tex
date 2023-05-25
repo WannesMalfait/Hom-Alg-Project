@@ -28,6 +28,16 @@
 Most of the contents of this paper will be based on the lecture
 notes by Peter Scholze, who developed the theory of condensed mathematics
 together with Dustin Clausen (\cite{Sch2019LecturesCM}).
+We first develop some necessary background from algebraic geometry
+relating to sheaves. This theory is then used to define sheaf
+cohomology on topological spaces. Finally, we give a short
+introduction to condensed mathematics itself, giving the basic
+definitions and exploring some examples. In the end we look
+at cohomology in the condensed setting, and compare it to sheaf
+cohomology. Although there are no original results, a lot of proofs
+from the references have been written out in more detail, and
+worked out examples illustrating different concepts have been
+added throughout the whole paper.
 
 \section{Sheaves}
 A central role in this paper will be played by sheaves.
@@ -1579,12 +1589,12 @@ Recall that sheaf cohomology was defined via right-derived
 functors of $\mcF \mapsto \mcF(X)$. We want to define
 condensed cohomology as derived functors of $M \mapsto M(S)$.
 Since we don't have injective resolutions, we can't take
-the right derived functors, the usual way. However, the
+the right derived functors the usual way. However, the
 Yoneda lemma and the above adjunction give us a way around it.
 We have
 \begin{equation*}
     \Hom_{\Cond(\Ab)}(\bbZ[\underline{S}], M) \cong
-    \Hom_{\Cond{\Set}}(\underline{S}, M) \cong
+    \Hom_{\Cond(\Set)}(\underline{S}, M) \cong
     M(S),
 \end{equation*}
 and hence we can use the $\Ext$ functors instead.
