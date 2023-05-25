@@ -1194,6 +1194,15 @@ we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
     More generally, $R^if_*(\Cont(-, \bbZ)) = H^i(S^1 , \bbZ)$, where
     $H^i(S^1, \bbZ)$ is the singular cohomology.
 \end{example}
+
+As in the example, we define the sheaf
+cohomology of a topological space $X$ with coefficients in an
+abelian group $A$ as
+\begin{equation*}
+    H^i_{\text{sheaf}}(X, A) \defeq R^if_*(\Cont(-, A)),
+\end{equation*}
+where $A$ is given the discrete topology and $f$ is the
+projection map $f\colon X \to \{*\}$.
 \section{Condensed sets}
 
 We now have all the necessary material to be able to say a little
@@ -1546,14 +1555,14 @@ the category of $\kappa$-condensed abelian groups.
     condensed abelian group $M$, by the Yoneda lemma. Since $M \mapsto M(S)$
     commutes with limits, it is indeed exact.
 \end{proof}
-This lemma is still valid in the actual definition of condensed sets,
+This lemma and the following corollary are still valid in the actual definition of condensed sets,
 which is independent on a choice of cardinal $\kappa$.
 \begin{corollary}
-    The category of condensed abelian groups has enough projectives.
+    The category of $\kappa$-condensed abelian groups has enough projectives.
 \end{corollary}
 \begin{proof}
     We follow the proof given in \cite[Theorem 2.2.6]{Dag2021FoundationsCM}.
-    Let $M$ be a condensed abelian group. For any extremally
+    Let $M$ be a $\kappa$-condensed abelian group. For any extremally
     disconnected set $S$, and $x\in M(S)$, we have a morphism
     $\alpha_x \colon \bbZ[\underline{S}] \to M$ such that $\alpha_x(\id_{S}) = x$,
     by the adjunction and the Yoneda lemma. Then the induced map
@@ -1565,6 +1574,39 @@ which is independent on a choice of cardinal $\kappa$.
     from a projective object.
 \end{proof}
 
+\medskip
+Recall that sheaf cohomology was defined via right-derived
+functors of $\mcF \mapsto \mcF(X)$. We want to define
+condensed cohomology as derived functors of $M \mapsto M(S)$.
+Since we don't have injective resolutions, we can't take
+the right derived functors, the usual way. However, the
+Yoneda lemma and the above adjunction give us a way around it.
+We have
+\begin{equation*}
+    \Hom_{\Cond(\Ab)}(\bbZ[\underline{S}], M) \cong
+    \Hom_{\Cond{\Set}}(\underline{S}, M) \cong
+    M(S),
+\end{equation*}
+and hence we can use the $\Ext$ functors instead.
+Concretely, for a topological space $X$ and abelian group $A$,
+the condensed cohomology of $X$ with coefficients in $A$ is
+\begin{equation*}
+    H^i_{\text{condensed}}(X, A) \defeq \Ext^i(\bbZ[\underline{X}], \underline{A}).
+\end{equation*}
+
+It should come as no surprise that this agrees with sheaf cohomology
+for nice topological spaces $X$. We have the following results:
+\begin{theorem}[ \protect{\cite[Theorem 3.2 and 3.3]{Sch2019LecturesCM}} ]
+    If $X$ is a compact Hausdorff space, then
+    \begin{equation*}
+        H^i_{\textrm{condensed}}(X, \bbZ) \cong H^i_{\textrm{sheaf}}(X, \bbZ),
+    \end{equation*}
+    and
+    \begin{equation*}
+        H^i_{\textrm{condensed}}(X, \bbR) \cong 0, i>0,\qquad
+        H^0_{\textrm{condensed}}(X, \bbR) \cong \Cont(X, \bbR).
+    \end{equation*}
+\end{theorem}
 
 \nocite{Apa2021condensed}
 \bibliographystyle{alpha}
