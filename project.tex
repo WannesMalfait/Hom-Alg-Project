@@ -12,6 +12,7 @@
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cond}{Cond}
 
 \title{A Fluid Introduction to Condensed Mathematics}
 \author{Wannes Malfait}
@@ -1493,6 +1494,76 @@ do not occur in this setting. As a final thing to consider, let
 us take a look at cohomology in the condensed setting.
 
 \subsection{Condensed cohomology}
+
+Given all the work that we have done in constructing cohomology
+for arbitrary categories of sheaves on a topological space,
+it would not be unreasonable to assume that we would now use this
+to define cohomology of condensed abelian groups.
+Although we won't be able to copy over the construction exactly,
+it will serve as our source of inspiration. There are a few
+problems that we need to address first.
+
+Ideally, we would want the definition of condensed sets
+to be independent of an (arbitrary) choice of uncountable
+limit cardinal. This is possible, and is done
+in \cite[Appendix to Lecture II]{Sch2019LecturesCM}. The resulting
+category is still abelian, and limits and colimits
+can still be taken section-wise. However, this category
+is no longer the category of sheaves on a site, and so some
+properties might no longer be valid. One important one
+is that the category no longer has enough injectives. In fact,
+it has no non-zero injectives (\cite{Sch2020AreTE}). So,
+we will need to use projective resolutions instead.
+Let us show that there are enough projectives in
+the category of $\kappa$-condensed abelian groups.
+\begin{lemma}
+    The forgetful functor $U$ from $\kappa$-condensed
+    abelian groups has a left adjoint $\bbZ[-]$.
+    For extremally disconnected $S$, $\bbZ[\underline{S}]$
+    is projective.
+\end{lemma}
+\begin{proof}
+    Let $T$ be a $\kappa$-condensed set, and $\bbZ[T]$ be the sheafification of the presheaf
+    which sends $S$ to $\bbZ[T(S)]$, the free abelian group on $T(S)$.
+    To see that this is a left adjoint, note that for each extremally disconnected
+    space $S$, and condensed abelian group $M$, we have a natural isomorphism
+    \begin{equation*}
+        \phi_{T, M, S}\colon \Hom_{\Ab}(\bbZ[T(S)], M(S)) \cong \Hom_{\Set}(T(S), U(M)(S)),
+    \end{equation*}
+    since free abelian groups are a left adjoint to the forgetful functor.
+    This then give the desired isomorphism
+    \begin{equation*}
+        \phi_{T, M} \colon \Hom_{\Cond(\Ab)}(\bbZ[T], M) \cong \Hom_{\Cond(\Set)}(T, U(M)),
+    \end{equation*}
+
+    Since limits and colimits can be taken section-wise, i.e. $M \mapsto M(S)$
+    commutes with all limits and colimits, it follows that $\bbZ[\underline{S}]$
+    is projective. Indeed, in any abelian category, an object $P$ is
+    projective if and only if $\Hom(P, -)$ is exact. So, to check that $\bbZ[\underline{S}]$
+    is projective we need that $\Hom_{\Cond(\Ab)}(\bbZ[\underline{S}], -)$ is exact.
+    This is equivalent to saying that the map $M \mapsto M(S)$
+    is exact, since $\Hom_{\Cond(\Ab)}(\bbZ[\underline{S}], M) = M(S)$ for any
+    condensed abelian group $M$, by the Yoneda lemma. Since $M \mapsto M(S)$
+    commutes with limits, it is indeed exact.
+\end{proof}
+This lemma is still valid in the actual definition of condensed sets,
+which is independent on a choice of cardinal $\kappa$.
+\begin{corollary}
+    The category of condensed abelian groups has enough projectives.
+\end{corollary}
+\begin{proof}
+    We follow the proof given in \cite[Theorem 2.2.6]{Dag2021FoundationsCM}.
+    Let $M$ be a condensed abelian group. For any extremally
+    disconnected set $S$, and $x\in M(S)$, we have a morphism
+    $\alpha_x \colon \bbZ[\underline{S}] \to M$ such that $\alpha_x(\id_{S}) = x$,
+    by the adjunction and the Yoneda lemma. Then the induced map
+    \begin{equation*}
+        h \colon \bigoplus_S \bigoplus_{x\in M(S)}\bbZ[\underline{S}] \to M,
+    \end{equation*}
+    is surjective. Since all the $\bbZ[\underline{S}]$ are projective,
+    so is the direct sum, and hence we have found a surjection onto $M$
+    from a projective object.
+\end{proof}
 
 
 \nocite{Apa2021condensed}
