@@ -157,21 +157,19 @@ sets on $X$, and $\Sh(X)$ for the category of sheaves of sets on $X$.
 In the same way, we write $\Ab(X), \Ring(X), \Vect(X),\dots $ for the category of
 sheaves of abelian groups, rings, vector spaces, \dots on $X$.
 \begin{remark}
-    We can "recover" the underlying space, by taking $X = \{*\}$,
+    We can "recover" the underlying space by taking $X = \{*\}$,
     the one-point space. We have $\Sh(*) = \Set, \Ab(*) = \Ab, \dots$
 \end{remark}
 
 \subsubsection{Examples}
 To solidify our understanding of sheaves, it will be beneficial to look
 at some examples.
-\begin{example}
-    The simplest examples of sheaves are those were
-    $\mcF(U)$ is not just a set, but a set of functions, and the
-    restrictions correspond to actual restrictions.
+The simplest examples of sheaves are those were
+$\mcF(U)$ is not just a set, but a set of functions, and the
+restrictions correspond to actual restrictions.
 
-\end{example}
 \begin{example}
-    Let $Y$ be another topological space, then we can define $\mcF(U) \defeq \Cont(U, Y)$
+    Let $Y$ be another topological space. Then we can define $\mcF(U) \defeq \Cont(U, Y)$
     where $\Cont(U,Y) = \{f\colon U \to Y \mid f \text{ continuous }\}$.
     The restrictions are defined as actual restrictions, and we get a presheaf. To see that
     it is a sheaf, we need to verify the gluing condition.
@@ -320,7 +318,7 @@ In this new context, we have to reword the definitions
 of presheaves and sheaves in a more abstract manner.
 \begin{definition}[Presheaves and Sheaves on a Site]
     Let $\mcC$ be a small category. A \emph{presheaf on $\mcC$} is
-    a contravariant functor $\mcF \colon \mcC \to \Set$.
+    a functor $\mcF^{\opp} \colon \mcC \to \Set$.
     If $\mcC$ is a site, then a \emph{sheaf on $\mcC$} is a
     presheaf $\mcF$, such that for any covering $\{U_i \to U\}_{i\in I}$,
     the following diagram is an equalizer:
@@ -344,7 +342,7 @@ of presheaves and sheaves in a more abstract manner.
 \end{definition}
 
 \subsubsection{Sheafification}
-In a lot of constructions, the natural thing we do, will end up
+In a lot of constructions, the natural thing we do will end up
 being a presheaf, but not a sheaf in general. So, we will need some way to turn
 presheaves into sheaves.
 \begin{prop}
@@ -367,14 +365,14 @@ the separated presheaf into a sheaf.
 \end{definition}
 \begin{remark}
     Since any equalizer is a monomorphism, it follows from the definition
-    of sheaves on a site, that a sheaf is separated.
+    of sheaves on a site that a sheaf is separated.
 \end{remark}
 \begin{example}
     \label{exmp:bad_presheaves}
     The presheaf $\mcF$ on a topological space $X$, which maps every
-    open to the same set $Y \neq \{*\}$ is not separated, as
+    open to the same set $Y \neq \{*\}$, is not separated as
     \begin{equation*}
-        Y = \mcF(\emptyset) \to \prod_{i \in \emptyset} = \{*\},
+        Y = \mcF(\emptyset) \to \prod_{i \in \emptyset} = \{*\}
     \end{equation*}
     is not injective if $Y \neq \{*\}$.
 
@@ -697,7 +695,7 @@ We can say more:
 \begin{proof}
     Since it is a left adjoint, it is right exact. On the other hand,
     colimits over filtered diagrams commute with finite limits.
-    So, $(-)^\sharp$ is left exact as functor between presheaves.
+    So, $(-)^\sharp$ is left exact as a functor between presheaves.
     We claim that if $\mcI \to \Sh(\mcC)$ is a diagram, then
     the limit $\mcF = \lim_i \mcF_i$ as presheaves is a sheaf.
     For this we show that $\mcF(\mcU) \cong \mcF(U)$ for any cover $\mcU = \{U_j \to U\}$.
@@ -778,7 +776,7 @@ the process of sheafification for some presheaves.
     to the cover does not really change anything: the elements of
     $\mcF(\mcU)$ will be $*$ at the indices for which $U_i = \emptyset$.
     Under $\sim$ such functions will all be the same.
-    Take, $f \in \mcF^\sharp(U)$. Then there is some cover
+    Take $f \in \mcF^\sharp(U)$. Then there is some cover
     $\mcU = \{U_i\}_{i\in I}$ such that $f$
     arises from $\mcF^+(\mcU)$. Consequently, for each $x\in U$,
     there is some $U_i$ containing $x$, such that $f$
@@ -829,7 +827,7 @@ a more abstract approach like in
     With this operation, the hom-sets become abelian groups.
     Using \cref{lem:lims_colims_presheaves} and \cref{prop:sheafification_exact}
     we find that $\Ab(\mcC)$ has finite limits and colimits.
-    Explicitly, limits in sheaves are the limits in presheaves
+    Explicitly, limits in sheaves are the limits in presheaves,
     and colimits in sheaves are the sheafifications of the colimits in presheaves.
     As such, we find:
     \begin{itemize}
@@ -841,7 +839,7 @@ a more abstract approach like in
               $\Ker(\alpha)(U) = \Ker(\alpha_U)$.
         \item The cokernel of $\alpha \colon \mcF \to \mcG$
               is given by the sheafification of the presheaf defined by
-              $\mcF(\alpha)(U) = \Coker(\alpha_U)$.
+              $H(\alpha)(U) = \Coker(\alpha_U)$.
     \end{itemize}
     For $\Ab(\mcC)$ to be an abelian category, we still need to
     show that for $\alpha \colon \mcF \to \mcG$ a morphism of sheaves,
@@ -1073,14 +1071,14 @@ while filling out the details.
               The final thing to check is that the transformations are natural
               in $\mcF$ and $\mcG$. Let us denote $\Phi$ for the map
               from $\Hom_{\Ab(X)}(f^* \mcG, \mcF)$ to $\Hom_{\Ab(Y)}(\mcG, f_*\mcF)$.
-              Let us start with naturality in $\mcF$.
+              We first show naturality in $\mcF$.
               If $\gamma \colon \mcF \to \mcF'$ is a natural transformation, we need
               to show that $\Phi(\gamma \beta) = f_*\gamma \Phi(\beta)$ for any
               morphism $\beta \colon f^*\mcG \to \mcF$. Indeed,
               \begin{equation*}
-                  \Phi(\gamma \alpha)_V = (\gamma \alpha)_{f\inv(V)}^V
-                  = \gamma_{f\inv(V)}\alpha_{f\inv(V)}^V
-                  = (f_*\gamma)_V \Phi(\alpha)_V.
+                  \Phi(\gamma \beta)_V = (\gamma \beta)_{f\inv(V)}^V
+                  = \gamma_{f\inv(V)}\beta_{f\inv(V)}^V
+                  = (f_*\gamma)_V \Phi(\beta)_V.
               \end{equation*}
               For $\eta \colon \mcG \to \mcG'$, we need to show that
               $\Phi(\beta f^*\eta) = \Phi(\beta)\eta$. The following
@@ -1152,7 +1150,7 @@ In the previous proof we considered the inclusion map.
 If we instead consider the projection map $f\colon X \to \{*\}$,
 then the pullback $f^*$ becomes the map $\Ab \to \Ab(X)$,
 which sends an abelian group $M$ to the constant sheaf with
-value $M$. The pushforward $f_*\colon \Ab(X) \to Ab$ maps
+value $M$. The pushforward $f_*\colon \Ab(X) \to \Ab$ maps
 a sheaf, $\mcF$, to its global sections, $\mcF(X)$.
 
 With this we can now do cohomology in $\Ab(X)$.
@@ -1178,7 +1176,7 @@ we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
     whose image lies in $2\pi \bbZ$. In other words, $\Ker(g_U) = \Cont(U, 2\pi \bbZ)$.
     This shows exactness at the middle. What remains to show is that $g$ is an
     epimorphism. For this, we need to check that for every open $U$ in $S^1$,
-    and continuous function $s \in \Cont(U, S^1)$, there is a cover ${U_i}_{i\in I}$
+    and continuous function $s \in \Cont(U, S^1)$, there is a cover $\{U_i\}_{i\in I}$
     of $U$ such that $s|_{U_i}$ is in the image of $g_U$. Let $U_1 = U \cap S^1 \setminus \{1\} $
     and $U_2 = U \cap S^2 \setminus \{2\}$. Then $\{U_1,U_2\}$ is an open cover
     of $U$, and each of the elements in the cover is homeomorphic to an open subset of $\bbR$.
@@ -1189,7 +1187,7 @@ we can consider the right derived functors $R^if_* \colon \Ab(X) \to \Ab(Y)$.
     not an epimorphism. After all, $\bbR$ is contractible, so any
     function in $\Cont(S^1, \bbR)$ is homotopic to the zero function. Hence,
     all the functions in the image will also be homotopic to the zero map.
-    Since $S^1$ has a non-trivial fundamental group, we see that image
+    Since $S^1$ has a non-trivial fundamental group, we see that the image
     is not everything.
 
     Consequently, we only get a left exact sequence
@@ -1333,7 +1331,8 @@ The point is that the map
     \underline{\id}\colon \underline{\bbR_{\text{discrete}}} \to \underline{\bbR_{\text{Euclidian}}}
 \end{equation*}
 is no longer an epimorphism. As we will see later on, the cokernel
-of this map can be computed ``section-wise'', i.e. $\Coker(f)(U) = \Coker(f_U)$.
+of this map can be computed ``section-wise'', i.e.
+$\Coker(\underline{\id})(U) = \Coker(\underline{\id}_U)$.
 So, to show that the cokernel is not trivial, we need to show that
 there is some profinite set $S$ with
 $\Cont(S, \bbR_{\text{discrete}}) \subsetneq \Cont(S,\bbR_{\text{Euclidean}})$.
@@ -1360,7 +1359,7 @@ colimit as presheaves to obtain a sheaf. For the category of
 $\kappa$-condensed sets, this is no longer necessary. To
 prove this, we'll need an alternative description of condensed sets.
 \begin{definition}
-    An \emph{extremally disconnected} set is a projective object
+    An \emph{extremally disconnected} space is a projective object
     in the category of compact Hausdorff spaces\footnote{
         The usual definition is that the closure of
         every open set must again be open. In this setting
@@ -1382,6 +1381,7 @@ through Stone--\v{C}ech compactification.
         \end{tikzcd}
     \end{equation*}
     In terms of cardinality, we have $|\beta X| \leq 2^{\left(2^{|X|}\right)}$.
+    The image $i_{X}(X)$ is dense in $\beta X$.
 \end{theorem}
 See, for example, \cite[\href{https://stacks.math.columbia.edu/tag/0908}{Section 0908}]{stacks-project}
 for a proof. Now, let $X$ be a compact Hausdorff space,
@@ -1417,7 +1417,8 @@ So
 \begin{equation*}
     f \circ i_{X'} = e \circ g = e \circ \beta g \circ i_{X'},
 \end{equation*}
-and hence $f = e \circ \beta g$, since $i_{X'}$ is a monomorphism.
+and hence $f = e \circ \beta g$, since $i_{X'}(X')$ is dense
+and $S$ is Hausdorff.
 
 So, we have shown that any compact Hausdorff space admits a surjection from
 and extremally disconnected space, i.e. the category has enough projectives.
@@ -1425,7 +1426,7 @@ We now want to describe $\kappa$-condensed sets, by restricting to
 just the category of extremally disconnected spaces. However, there is a small
 technicality that we have to take care of first. The product of two
 infinite extremally disconnected spaces is never extremally disconnected. So,
-we can't take fiber products, and so there is a problem in defining a site
+we can't take fiber products, and we can't define a site
 on this category. The solution is to consider an alternative description
 of what a site is.
 
@@ -1434,7 +1435,7 @@ of its Yoneda embedding $\Hom(- ,X)$. So, it is a functor $S \colon \mcC^{\opp} 
 such that for any $X' \in \mcC$ we have $S(X') \subseteq \Hom(X', X)$,
 and for all morphisms $f\colon Y \to Y'$, $S(f)$ is the restriction
 of $\Hom(f, X)$ to $S(Y')$. A site becomes a category together with
-a Grothendieck topology. Namely, for each object of $\mcC$,
+a \emph{Grothendieck topology}. Namely, for each object of $\mcC$,
 we choose a collection of sieves on that object, called covering sieves.
 These must again satisfy axioms similar to those for covers:
 \begin{enumerate}
@@ -1447,7 +1448,7 @@ These must again satisfy axioms similar to those for covers:
 \end{enumerate}
 Here the pullback of $S$ by $f\colon Y \to X$ is given by
 $f^*S(Z)= \{g\colon Z \to Y \mid f\circ g \in S(Z)\}$.
-Importantly, the definition doesn't require the existence of pullbacks.
+Importantly, the definition doesn't require the existence of fiber products.
 The sheaf condition for a presheaf $\mcF$, is that for any
 object $X$ and any covering sieve $S$ on $X$, the map
 \begin{equation*}
@@ -1473,10 +1474,10 @@ Finally, it turns out that restricting to $\kappa$-small extremally disconnected
 spaces gives an equivalent category of sheaves, to the category
 of $\kappa$-condensed sets (\cite[Theorem 1.2.16]{Dag2021FoundationsCM}).
 Here it is crucial that the cardinality of the Stone--\v{C}ech compactification
-is bounded. Since $\kappa$ is an uncountable strong limit cardinal,
+is bounded. Indeed, since $\kappa$ is an uncountable strong limit cardinal,
 we know that if $|X| < \kappa$ then also $|\beta X| < \kappa$.
 
-Checking that a presheaf is a sheaf, becomes a lot easier now.
+Checking that a presheaf is a sheaf becomes a lot easier now.
 A sheaf on $\kappa$-small
 extremally disconnected spaces is a functor
 \begin{equation*}
@@ -1515,7 +1516,7 @@ us take a look at cohomology in the condensed setting.
 \subsection{Condensed cohomology}
 
 Given all the work that we have done in constructing cohomology
-for arbitrary categories of sheaves on a topological space,
+for categories of sheaves on an arbitrary topological space,
 it would not be unreasonable to assume that we would now use this
 to define cohomology of condensed abelian groups.
 Although we won't be able to copy over the construction exactly,
@@ -1552,7 +1553,7 @@ the category of $\kappa$-condensed abelian groups.
     since free abelian groups are a left adjoint to the forgetful functor.
     This then give the desired isomorphism
     \begin{equation*}
-        \phi_{T, M} \colon \Hom_{\Cond(\Ab)}(\bbZ[T], M) \cong \Hom_{\Cond(\Set)}(T, U(M)),
+        \phi_{T, M} \colon \Hom_{\Cond(\Ab)}(\bbZ[T], M) \cong \Hom_{\Cond(\Set)}(T, U(M)).
     \end{equation*}
 
     Since limits and colimits can be taken section-wise, i.e. $M \mapsto M(S)$
@@ -1566,7 +1567,7 @@ the category of $\kappa$-condensed abelian groups.
     commutes with limits, it is indeed exact.
 \end{proof}
 This lemma and the following corollary are still valid in the actual definition of condensed sets,
-which is independent on a choice of cardinal $\kappa$.
+which is independent of a choice of cardinal $\kappa$.
 \begin{corollary}
     The category of $\kappa$-condensed abelian groups has enough projectives.
 \end{corollary}
